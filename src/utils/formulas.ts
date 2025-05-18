@@ -4,6 +4,15 @@
 // Temperature coefficient of efficiency for solar panels (typical value)
 const TEMP_COEFFICIENT = -0.00222; // -0.4% per Fahrenheit
 
+// Panel thermal properties per square meter
+const PANEL_MASS_PER_M2 = 10; // kg/m² (typical mass of solar panel)
+const PANEL_SPECIFIC_HEAT = 900; // J/(kg·K) (typical for aluminum/glass construction)
+
+// Calculate panel thermal mass based on area
+function getPanelThermalMass(area: number): number {
+  return PANEL_MASS_PER_M2 * area; // kg
+}
+
 // Air density as a function of temperature (kg/m³)
 function getAirDensity(tempF: number): number {
   // Using ideal gas law: ρ = P/(R*T)
@@ -75,12 +84,17 @@ export function computeHeatLoss(
   return h * area * (T_panelK - T_ambientK); // convection loss
 }
 
+// Compute temperature change with thermal mass consideration
 export function computeTemperatureChange(
   Q_net: number,
   mass: number,
-  specificHeat: number
+  specificHeat: number,
+  isPanel: boolean = false,
+  panelArea: number = 0
 ): number {
-  const deltaTK = Q_net / (mass * specificHeat);
+  const effectiveMass = isPanel ? getPanelThermalMass(panelArea) : mass;
+  const effectiveSpecificHeat = isPanel ? PANEL_SPECIFIC_HEAT : specificHeat;
+  const deltaTK = Q_net / (effectiveMass * effectiveSpecificHeat);
   return (deltaTK * 9) / 5; // Convert Kelvin to Fahrenheit
 }
 

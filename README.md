@@ -142,14 +142,20 @@ k = k₀ + slope * (T - 273.15)
 Pr = 0.713 - 0.0001 * (T - 293.15)
 ```
 
-#### **2. Solar Panel Efficiency**
+#### **2. Solar Panel Properties**
 
-Panel efficiency decreases with temperature:
+Panel efficiency decreases with temperature and thermal mass scales with area:
 
 ```typescript
+// Panel efficiency
 η = η₀ * (1 + β * (T - T_ref))
-// where β = -0.004 K⁻¹ (temperature coefficient)
-// T_ref = 298.15K (25°K reference temperature)
+// where β = -0.00222 °F⁻¹ (temperature coefficient)
+// T_ref = 77°F (reference temperature)
+
+// Panel thermal mass
+panelMass = PANEL_MASS_PER_M2 * area
+// where PANEL_MASS_PER_M2 = 10 kg/m²
+// specific heat = 900 J/(kg·K) for aluminum/glass construction
 ```
 
 ### **Formulas Used**
@@ -191,30 +197,32 @@ Q_loss = h * area * (T_panel - T_ambient)
 Q_net = Q - Q_loss
 ```
 
-#### **6. Panel Outlet Temperature**
+#### **6. Panel Temperature Change**
 
 ```
-ΔT_panel = Q_net / (massFlowRate * specificHeat)
-panelOutletTemp = tankTemp + ΔT_panel
+// Panel temperature change considers thermal mass
+ΔT_panel = Q_net / (panelMass * panelSpecificHeat)
+newPanelTemp = panelTemp + ΔT_panel
 ```
 
-#### **7. Energy Delivered to Tank**
+#### **7. Fluid Temperature Change in Panel**
+
+```
+ΔT_fluid = Q_net / (massFlowRate * fluidSpecificHeat)
+panelOutletTemp = newPanelTemp + ΔT_fluid
+```
+
+#### **8. Energy Delivered to Tank**
 
 ```
 Q_delivered = massFlowRate * specificHeat * (panelOutletTemp - tankTemp)
 ```
 
-#### **8. Tank Temperature Update**
+#### **9. Tank Temperature Update**
 
 ```
 ΔT_tank = Q_delivered / (fluidMass * specificHeat)
 newTankTemp = tankTemp + ΔT_tank
-```
-
-#### **9. Panel Temperature (Approximation)**
-
-```
-newPanelTemp = (tankTemp + panelOutletTemp) / 2
 ```
 
 ---
@@ -226,6 +234,7 @@ newPanelTemp = (tankTemp + panelOutletTemp) / 2
 - The pump provides constant flow (no head loss modeled)
 - Air properties are calculated at the film temperature
 - Solar panel efficiency decreases with temperature
+- Panel thermal mass scales with area (10 kg/m²)
 - Natural convection is modeled using Churchill-Chu correlation
 - A small forced convection component simulates light wind
 

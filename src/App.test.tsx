@@ -112,7 +112,7 @@ describe('Solar Thermal System Simulator App', () => {
     const inputs = [
       'Solar Irradiance (W/m²)',
       'Solar Panel Efficiency (0 - 1)',
-      'Ambient Temp (°K)',
+      'Ambient Temp (°F)',
       'Flow Rate (L/min)',
       'Tank Volume (L)',
       'Tank Elevation Difference (m)',

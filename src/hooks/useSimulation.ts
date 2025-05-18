@@ -1,6 +1,11 @@
 import { useReducer, useRef, useCallback, useEffect, useState } from 'react';
 import { FLUIDS } from '../models/Fluid';
-import { computeHeatInput, computeHeatLoss, computeHeatTransferCoeff } from '../utils/formulas';
+import {
+  computeHeatInput,
+  computeHeatLoss,
+  computeHeatTransferCoeff,
+  computeTemperatureChange,
+} from '../utils/formulas';
 import { SimulationState, SimulationParams, SimulationAction } from '../types/index';
 import { DEFAULT_PARAMS } from '../constants/simulation';
 
@@ -10,7 +15,7 @@ function getInitialState(params: SimulationParams): SimulationState {
   return {
     time: 0,
     tankTemp: params.initialTemp,
-    panelTemp: params.initialTemp,
+    panelTemp: params.ambientTemp,
     Q: 0,
     Q_loss: 0,
     running: false,
@@ -65,15 +70,15 @@ export function useSimulation() {
     const tankVolumeM3 = tankVolume / 1000;
     const fluidMass = tankVolumeM3 * fluidProps.density;
     const prevState = stateRef.current;
-    const Q = computeHeatInput(irradiance, efficiency, panelArea, prevState.panelTemp); // W
 
-    // Compute heat transfer coefficient based on current conditions
+    // Compute heat input and losses
+    const Q = computeHeatInput(irradiance, efficiency, panelArea, prevState.panelTemp); // W
     const heatTransferCoeff = computeHeatTransferCoeff(prevState.panelTemp, ambientTemp);
     const Q_loss = computeHeatLoss(panelArea, prevState.panelTemp, ambientTemp, heatTransferCoeff); // W
     const Q_net = Q - Q_loss;
 
     // --- Flow rate logic with passive return ---
-    let effectiveFlowRate = flowRate; // L/min
+    let effectiveFlowRate = flowRate;
     if (flowRate <= 0.01) {
       // Pump is off or nearly off
       // Gravity-driven: allow 0.2 L/min per meter elevationDiff if tank is above panel
@@ -88,25 +93,32 @@ export function useSimulation() {
       }
       effectiveFlowRate = Math.max(gravityFlow, thermoFlow, 0); // Use the stronger effect
     }
+
     // flowRate: L/min -> m^3/s
     const flowRate_m3s = Math.max(effectiveFlowRate, 0) / 1000 / 60; // allow zero
     const massFlowRate = flowRate_m3s * fluidProps.density; // kg/s
-    // ΔT_panel = Q_net / (m_dot * cp)
-    let deltaT_panel = 0;
+
+    // Calculate panel temperature change due to heat input/loss
+    const deltaT_panel = computeTemperatureChange(Q_net, 0, 0, true, panelArea);
+    const newPanelTemp = prevState.panelTemp + deltaT_panel;
+
+    // Calculate fluid temperature change in panel
+    let deltaT_fluid = 0;
     if (massFlowRate > 0) {
-      deltaT_panel = Q_net / (massFlowRate * fluidProps.specificHeat);
+      deltaT_fluid = Q_net / (massFlowRate * fluidProps.specificHeat);
     }
-    // Panel outlet temp = tank temp + ΔT_panel
-    const panelOutletTemp = prevState.tankTemp + deltaT_panel;
+
+    // Panel outlet temp = panel temp + fluid temp change
+    const panelOutletTemp = newPanelTemp + deltaT_fluid;
+
     // For a well-mixed tank, energy delivered per second:
-    // Q_delivered = massFlowRate * cp * (panelOutletTemp - tankTemp)
     const Q_delivered =
       massFlowRate * fluidProps.specificHeat * (panelOutletTemp - prevState.tankTemp);
+
     // Update tank temp
-    const deltaT_tank = Q_delivered / (fluidMass * fluidProps.specificHeat);
+    const deltaT_tank = computeTemperatureChange(Q_delivered, fluidMass, fluidProps.specificHeat);
     const newTankTemp = prevState.tankTemp + deltaT_tank;
-    // Panel temp is the average of inlet and outlet (approximation)
-    const newPanelTemp = (prevState.tankTemp + panelOutletTemp) / 2;
+
     const tickData = {
       time: prevState.time + 1,
       tankTemp: newTankTemp,
