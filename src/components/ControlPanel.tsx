@@ -146,8 +146,8 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
               <input
                 id="flowRate"
                 type="number"
-                min={0.1}
-                max={20}
+                min={0}
+                max={100}
                 step={0.1}
                 {...field}
                 className="w-full border rounded px-3 py-2"
@@ -207,7 +207,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                 id="panelArea"
                 type="number"
                 min={0.1}
-                max={10}
+                max={100}
                 step={0.1}
                 {...field}
                 className="w-full border rounded px-3 py-2"
