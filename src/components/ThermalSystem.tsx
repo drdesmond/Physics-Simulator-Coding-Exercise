@@ -77,9 +77,10 @@ export const ThermalSystem: React.FC<ThermalSystemProps> = ({
         {/* Tank column */}
         <div className="flex flex-col items-center self-end">
           {/* Top stub */}
+          <div className="h-12" />
           <div className={pipe + ' w-8'} />
           <div
-            className="w-14 md:w-28 h-64 border rounded-3xl text-white flex flex-col items-center justify-center"
+            className="w-14 md:w-28 h-52 border rounded-3xl text-white flex flex-col items-center justify-center"
             style={{ background: tempGradient(tankTemp) }}
           >
             <span className="text-xs md:text-sm">{tankTemp.toFixed(3)} °F</span>
