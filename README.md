@@ -6,7 +6,7 @@
 ## 🖥️ Watch the demo
 
 Watch Demo on [Youtube](https://youtu.be/10L8m4ujDA0)
-[![Watch the demo](./public/assets/solar-thermal-system-diagram.png)](https://youtu.be/10L8m4ujDA0)
+[![Watch the demo](./public/assets/solar-thermal-system-diagram.png)](https://youtu.be/QDBnxJsE0b8)
 
 _Video: Video of the solar thermal system showing the Sun, Solar Panel, Pump, and Storage Tank in a closed-loop heat transfer system exposed to environmental conditions._
 
