@@ -42,7 +42,7 @@ export function computeHeatInput(
   area: number,
   panelTempK: number
 ): number {
-  // Reference temperature for efficiency (typically 25°C = 298.15K)
+  // Reference temperature for efficiency (typically 25°K = 298.15K)
   const refTempK = 298.15;
 
   // Calculate temperature-dependent efficiency

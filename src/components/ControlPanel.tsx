@@ -126,7 +126,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
               <input
                 id="ambientTemp"
                 type="number"
-                min={-40} // -40°C
+                min={-40} // -40°K
                 max={300} // 300°K
                 step={1}
                 {...field}
@@ -186,7 +186,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
               <input
                 id="initialTemp"
                 type="number"
-                min={-40} // -40°C
+                min={-40} // -40°K
                 max={300}
                 step={1}
                 {...field}

@@ -81,7 +81,7 @@ export function useSimulation() {
       if (elevationDiff > 0) {
         gravityFlow = 0.2 * elevationDiff; // L/min
       }
-      // Thermosiphon: allow 0.1 L/min per 10°C panel-tank difference if panel is hotter
+      // Thermosiphon: allow 0.1 L/min per 10°K panel-tank difference if panel is hotter
       let thermoFlow = 0;
       if (prevState.panelTemp > prevState.tankTemp) {
         thermoFlow = 0.1 * ((prevState.panelTemp - prevState.tankTemp) / 10);
@@ -127,7 +127,6 @@ export function useSimulation() {
 
   const start = useCallback(
     (params: SimulationParams) => {
-      console.log('start', params);
       paramsRef.current = params;
       dispatch({ type: 'START', payload: params });
       setData([]);

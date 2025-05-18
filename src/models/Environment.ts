@@ -1,5 +1,5 @@
 export interface EnvironmentProps {
-  ambientTemp: number; // °C
+  ambientTemp: number; // °K
   h: number; // heat transfer coefficient, W/(m^2·K)
 }
 

@@ -25,7 +25,7 @@ export const ChartPanel: React.FC<ChartPanelProps> = ({ data }) => {
             dataKey="time"
             label={{ value: 'Time (s)', position: 'insideBottomRight', offset: -5 }}
           />
-          <YAxis label={{ value: 'Temp (°C)', angle: -90, position: 'insideLeft' }} />
+          <YAxis label={{ value: 'Temp (°K)', angle: -90, position: 'insideLeft' }} />
           <Tooltip />
           <Legend />
           <Line

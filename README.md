@@ -5,7 +5,7 @@
 
 ## 🖥️ Watch the demo
 
-[![Watch the demo](./public/assets/solar-thermal-system-diagram.png)](./public/assets/Physics_Simulator_Coding_Exercise.mp4)
+[![Watch the demo](./public/assets/solar-thermal-system-diagram.png)](https://youtu.be/10L8m4ujDA0)
 
 _Video: Video of the solar thermal system showing the Sun, Solar Panel, Pump, and Storage Tank in a closed-loop heat transfer system exposed to environmental conditions._
 
@@ -24,10 +24,10 @@ This project simulates heat transfer in a solar thermal system, modeling the flo
   - Fluid type (Water or Glycol)
   - Solar irradiance (W/m²)
   - Solar panel efficiency (0-1)
-  - Ambient temperature (°C)
+  - Ambient temperature (°K)
   - Flow rate (L/min)
   - Tank volume (L)
-  - Initial temperature (°C)
+  - Initial temperature (°K)
   - Panel area (m²)
   - Tank elevation difference (m) — positive means tank is above panel (enables gravity-driven return)
 - **Live-updating chart** of tank and panel temperatures, heat input, and heat loss
@@ -148,7 +148,7 @@ Panel efficiency decreases with temperature:
 ```typescript
 η = η₀ * (1 + β * (T - T_ref))
 // where β = -0.004 K⁻¹ (temperature coefficient)
-// T_ref = 298.15K (25°C reference temperature)
+// T_ref = 298.15K (25°K reference temperature)
 ```
 
 ### **Formulas Used**
