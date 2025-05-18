@@ -117,7 +117,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
         </div>
         <div>
           <label className="block font-medium mb-1" htmlFor="ambientTemp">
-            Ambient Temp (°K)
+            Ambient Temp (°F)
           </label>
           <Controller
             name="ambientTemp"
@@ -126,8 +126,8 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
               <input
                 id="ambientTemp"
                 type="number"
-                min={-40} // -40°K
-                max={300} // 300°K
+                min={-40}
+                max={10000}
                 step={1}
                 {...field}
                 className="w-full border rounded px-3 py-2"
@@ -177,7 +177,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
         </div>
         <div>
           <label className="block font-medium mb-1" htmlFor="initialTemp">
-            Initial Tank Temperature (°K)
+            Initial Tank Temperature (°F)
           </label>
           <Controller
             name="initialTemp"
@@ -186,8 +186,8 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
               <input
                 id="initialTemp"
                 type="number"
-                min={-40} // -40°K
-                max={300}
+                min={-40}
+                max={10000}
                 step={1}
                 {...field}
                 className="w-full border rounded px-3 py-2"

@@ -1,8 +1,8 @@
 import React from 'react';
 import { SimulationParams } from '../types/index';
 
-const MAX_TEMP = 333;
-const START_TEMP = 0;
+const MAX_TEMP = 10000; // 10000°F
+const START_TEMP = -40; // -40°F
 
 interface ThermalSystemProps
   extends Pick<SimulationParams, 'fluid' | 'irradiance' | 'flowRate' | 'efficiency'> {
@@ -72,7 +72,7 @@ export const ThermalSystem: React.FC<ThermalSystemProps> = ({
                 className="mb-[-2px] mt-0 w-12 md:w-28 h-44 border rounded text-white flex flex-col items-center justify-center"
                 style={{ background: getGradient(panelTemp) }}
               >
-                <span>{panelTemp.toFixed(3)}°K</span>
+                <span>{panelTemp.toFixed(3)}°F</span>
                 <span className="text-xs">Solar Panel</span>
                 <span className="text-xs">Eff: {efficiency.toFixed(2)}</span>
               </div>
@@ -86,7 +86,7 @@ export const ThermalSystem: React.FC<ThermalSystemProps> = ({
                 className="mb-[-2px] mt-0 w-12 md:w-28 h-44 border rounded-3xl text-white flex flex-col items-center justify-center"
                 style={{ background: getGradient(tankTemp) }}
               >
-                <span>{tankTemp.toFixed(3)}°K</span>
+                <span>{tankTemp.toFixed(3)}°F</span>
                 <span className="text-xs">Storage Tank</span>
               </div>
             </div>
