@@ -13,11 +13,28 @@ function getPanelThermalMass(area: number): number {
   return PANEL_MASS_PER_M2 * area; // kg
 }
 
-// Air density as a function of temperature (kg/m³)
-function getAirDensity(tempF: number): number {
+// Calculate air pressure at given elevation (Pa)
+function getAirPressure(elevationDiff: number): number {
+  const seaLevelPressure = 101325; // Pa at sea level
+  const g = 9.81; // m/s²
+  const R = 287.05; // J/(kg·K)
+  const T0 = 288.15; // K (15°C at sea level)
+
+  // Convert elevation to meters (assuming positive is up)
+  const elevationM = Math.max(0, elevationDiff);
+
+  // Calculate pressure using barometric formula
+  return seaLevelPressure * Math.exp(-(g * elevationM) / (R * T0));
+}
+
+// Air density as a function of temperature and elevation (kg/m³)
+function getAirDensity(tempF: number, elevationDiff: number): number {
   // Using ideal gas law: ρ = P/(R*T)
-  // At standard pressure (101325 Pa) and using gas constant for air (287.05 J/(kg·°F))
-  return 101325 / (287.05 * (tempF + 459.67)); // Using Rankine for calculation
+  const pressure = getAirPressure(elevationDiff);
+  const R = 287.05; // J/(kg·K)
+  const tempR = tempF + 459.67; // Convert to Rankine
+  const tempK = (tempR * 5) / 9; // Convert to Kelvin for calculation
+  return pressure / (R * tempK);
 }
 
 // Air viscosity as a function of temperature (kg/(m·s))
@@ -107,7 +124,7 @@ export function computeHeatTransferCoeff(
 
   // Calculate air properties at the film temperature (average of panel and ambient)
   const filmTempF = (panelTempF + ambientTempF) / 2;
-  const airDensity = getAirDensity(filmTempF);
+  const airDensity = getAirDensity(filmTempF, elevationDiff);
   const airViscosity = getAirViscosity(filmTempF);
   const airThermalConductivity = getAirThermalConductivity(filmTempF, irradiance);
   const prandtl = getPrandtlNumber(filmTempF, flowRate);

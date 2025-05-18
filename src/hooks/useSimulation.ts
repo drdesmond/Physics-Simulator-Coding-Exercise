@@ -9,7 +9,7 @@ import {
 import { SimulationState, SimulationParams, SimulationAction } from '../types/index';
 import { DEFAULT_PARAMS } from '../constants/simulation';
 
-const MAX_DATA_POINTS = 50; // Maximum number of data points to keep in memory
+const MAX_DATA_POINTS = 50; // Maximum number of data points to keep in memory using a FIFO queue
 
 function getInitialState(params: SimulationParams): SimulationState {
   return {
