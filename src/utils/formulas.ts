@@ -6,7 +6,7 @@ const TEMP_COEFFICIENT = -0.00222; // -0.4% per Fahrenheit
 
 // Panel thermal properties per square meter
 const PANEL_MASS_PER_M2 = 10; // kg/m² (typical mass of solar panel)
-const PANEL_SPECIFIC_HEAT = 900; // J/(kg·K) (typical for aluminum/glass construction)
+const PANEL_SPECIFIC_HEAT = 900; // J/(kg·°F) (typical for aluminum/glass construction)
 
 // Calculate panel thermal mass based on area
 function getPanelThermalMass(area: number): number {
@@ -16,39 +16,35 @@ function getPanelThermalMass(area: number): number {
 // Air density as a function of temperature (kg/m³)
 function getAirDensity(tempF: number): number {
   // Using ideal gas law: ρ = P/(R*T)
-  // At standard pressure (101325 Pa) and using gas constant for air (287.05 J/(kg·K))
-  const tempR = tempF + 459.67; // Convert to Rankine
-  return 101325 / (287.05 * ((tempR * 5) / 9)); // Convert Rankine to Kelvin for calculation
+  // At standard pressure (101325 Pa) and using gas constant for air (287.05 J/(kg·°F))
+  return 101325 / (287.05 * (tempF + 459.67)); // Using Rankine for calculation
 }
 
 // Air viscosity as a function of temperature (kg/(m·s))
 function getAirViscosity(tempF: number): number {
   // Sutherland's formula for air viscosity
-  const tempR = tempF + 459.67; // Convert to Rankine
-  const tempK = (tempR * 5) / 9; // Convert to Kelvin for calculation
-  const S = 110.4; // Sutherland's constant for air (K)
-  const T0 = 273.15; // Reference temperature (K)
+  const tempR = tempF + 459.67; // Convert to Rankine for calculation
+  const S = 110.4; // Sutherland's constant for air (°R)
+  const T0 = 491.67; // Reference temperature (°R)
   const mu0 = 1.716e-5; // Reference viscosity at T0 (kg/(m·s))
-  return ((mu0 * (T0 + S)) / (tempK + S)) * Math.pow(tempK / T0, 1.5);
+  return ((mu0 * (T0 + S)) / (tempR + S)) * Math.pow(tempR / T0, 1.5);
 }
 
-// Air thermal conductivity as a function of temperature (W/(m·K))
-function getAirThermalConductivity(tempF: number): number {
-  // Linear approximation for thermal conductivity
-  const tempR = tempF + 459.67; // Convert to Rankine
-  const tempK = (tempR * 5) / 9; // Convert to Kelvin for calculation
-  const k0 = 0.0242; // Thermal conductivity at 32°F (W/(m·K))
-  const slope = 7.7e-5; // Temperature coefficient (W/(m·K²))
-  return k0 + slope * (tempK - 273.15);
+// Air thermal conductivity as a function of temperature (W/(m·°F))
+function getAirThermalConductivity(tempF: number, irradiance: number): number {
+  // Base thermal conductivity varies with irradiance (more solar energy = more molecular motion)
+  const baseConductivity = 0.0242 * (1 + (irradiance / 1000) * 0.1); // 10% increase at 1000 W/m²
+  const slope = 7.7e-5 * (1 + (irradiance / 1000) * 0.05); // 5% increase in temperature sensitivity
+  return baseConductivity + slope * tempF;
 }
 
-// Prandtl number as a function of temperature
-function getPrandtlNumber(tempF: number): number {
-  // Prandtl number is relatively constant for air in the temperature range of interest
-  // Using a simplified model that varies slightly with temperature
-  const tempR = tempF + 459.67; // Convert to Rankine
-  const tempK = (tempR * 5) / 9; // Convert to Kelvin for calculation
-  return 0.713 - 0.0001 * (tempK - 293.15);
+// Prandtl number as a function of temperature and flow rate
+function getPrandtlNumber(tempF: number, flowRate: number): number {
+  // Prandtl number varies with temperature and flow rate
+  // Higher flow rates increase turbulence and affect heat transfer
+  const basePrandtl = 0.713 - 0.0001 * tempF;
+  const flowEffect = Math.min(flowRate / 10, 1) * 0.1; // Up to 10% increase at high flow rates
+  return basePrandtl * (1 + flowEffect);
 }
 
 // Compute heat input with temperature-dependent efficiency
@@ -75,13 +71,12 @@ export function computeHeatLoss(
   area: number,
   T_panelF: number,
   T_ambientF: number,
-  h: number
+  h: number,
+  elevationDiff: number
 ): number {
-  const T_panelR = T_panelF + 459.67; // Convert to Rankine
-  const T_ambientR = T_ambientF + 459.67; // Convert to Rankine
-  const T_panelK = (T_panelR * 5) / 9; // Convert to Kelvin
-  const T_ambientK = (T_ambientR * 5) / 9; // Convert to Kelvin
-  return h * area * (T_panelK - T_ambientK); // convection loss
+  // Heat loss increases with elevation due to lower air pressure
+  const elevationFactor = 1 - (elevationDiff / 1000) * 0.1; // 10% reduction per 1000m
+  return h * area * (T_panelF - T_ambientF) * elevationFactor; // convection loss in °F
 }
 
 // Compute temperature change with thermal mass consideration
@@ -94,8 +89,7 @@ export function computeTemperatureChange(
 ): number {
   const effectiveMass = isPanel ? getPanelThermalMass(panelArea) : mass;
   const effectiveSpecificHeat = isPanel ? PANEL_SPECIFIC_HEAT : specificHeat;
-  const deltaTK = Q_net / (effectiveMass * effectiveSpecificHeat);
-  return (deltaTK * 9) / 5; // Convert Kelvin to Fahrenheit
+  return Q_net / (effectiveMass * effectiveSpecificHeat); // temperature change in °F
 }
 
 // Compute heat transfer coefficient using natural convection correlation
@@ -103,25 +97,23 @@ export function computeTemperatureChange(
 export function computeHeatTransferCoeff(
   panelTempF: number,
   ambientTempF: number,
-  panelHeight: number = 1.5 // default panel height in meters
+  panelHeight: number = 1.5, // default panel height in meters
+  irradiance: number = 0,
+  flowRate: number = 0,
+  elevationDiff: number = 0
 ): number {
-  const panelTempR = panelTempF + 459.67; // Convert to Rankine
-  const ambientTempR = ambientTempF + 459.67; // Convert to Rankine
-  const panelTempK = (panelTempR * 5) / 9; // Convert to Kelvin
-  const ambientTempK = (ambientTempR * 5) / 9; // Convert to Kelvin
-  const deltaT = Math.abs(panelTempK - ambientTempK);
+  const deltaT = Math.abs(panelTempF - ambientTempF);
   if (deltaT < 0.1) return 5; // minimum value for very small temperature differences
 
   // Calculate air properties at the film temperature (average of panel and ambient)
   const filmTempF = (panelTempF + ambientTempF) / 2;
   const airDensity = getAirDensity(filmTempF);
   const airViscosity = getAirViscosity(filmTempF);
-  const airThermalConductivity = getAirThermalConductivity(filmTempF);
-  const prandtl = getPrandtlNumber(filmTempF);
+  const airThermalConductivity = getAirThermalConductivity(filmTempF, irradiance);
+  const prandtl = getPrandtlNumber(filmTempF, flowRate);
 
   // Compute Grashof number
-  const filmTempK = ((filmTempF + 459.67) * 5) / 9; // Convert to Kelvin
-  const beta = 1 / filmTempK; // thermal expansion coefficient
+  const beta = 1 / (filmTempF + 459.67); // thermal expansion coefficient
   const g = 9.81; // gravitational acceleration
   const Gr =
     (g * beta * deltaT * Math.pow(panelHeight, 3)) / Math.pow(airViscosity / airDensity, 2);
@@ -137,7 +129,8 @@ export function computeHeatTransferCoeff(
   const h = (Nu * airThermalConductivity) / panelHeight;
 
   // Add a small forced convection component (simulating light wind)
-  const windSpeed = 0.5; // m/s
+  // Wind effect increases with elevation
+  const windSpeed = 0.5 * (1 + elevationDiff / 1000); // m/s, increases with elevation
   const forcedConv = 5.7 + 3.8 * windSpeed;
 
   return h + forcedConv;

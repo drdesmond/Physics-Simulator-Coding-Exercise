@@ -74,7 +74,13 @@ export function useSimulation() {
     // Compute heat input and losses
     const Q = computeHeatInput(irradiance, efficiency, panelArea, prevState.panelTemp); // W
     const heatTransferCoeff = computeHeatTransferCoeff(prevState.panelTemp, ambientTemp);
-    const Q_loss = computeHeatLoss(panelArea, prevState.panelTemp, ambientTemp, heatTransferCoeff); // W
+    const Q_loss = computeHeatLoss(
+      panelArea,
+      prevState.panelTemp,
+      ambientTemp,
+      heatTransferCoeff,
+      elevationDiff
+    ); // W
 
     // --- Flow rate logic with passive return ---
     let effectiveFlowRate = flowRate;
