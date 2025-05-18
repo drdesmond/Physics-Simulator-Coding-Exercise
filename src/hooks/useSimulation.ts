@@ -79,23 +79,29 @@ export function useSimulation() {
 
     // --- Flow rate logic with passive return ---
     let effectiveFlowRate = flowRate;
-    if (flowRate <= 0.01) {
-      // Pump is off or nearly off
+    if (flowRate > 0.01) {
+      // Pump is on, use the set flow rate
+      effectiveFlowRate = flowRate;
+    } else if (flowRate > 0) {
+      // Pump is nearly off, allow passive flow
       // Gravity-driven: allow 0.2 L/min per meter elevationDiff if tank is above panel
       let gravityFlow = 0;
       if (elevationDiff > 0) {
         gravityFlow = 0.2 * elevationDiff; // L/min
       }
-      // Thermosiphon: allow 0.1 L/min per 10°K panel-tank difference if panel is hotter
+      // Thermosiphon: allow 0.1 L/min per 10°F panel-tank difference if panel is hotter
       let thermoFlow = 0;
       if (prevState.panelTemp > prevState.tankTemp) {
         thermoFlow = 0.1 * ((prevState.panelTemp - prevState.tankTemp) / 10);
       }
       effectiveFlowRate = Math.max(gravityFlow, thermoFlow, 0); // Use the stronger effect
+    } else {
+      // Flow rate is exactly 0, no flow at all
+      effectiveFlowRate = 0;
     }
 
     // flowRate: L/min -> m^3/s
-    const flowRate_m3s = Math.max(effectiveFlowRate, 0) / 1000 / 60; // allow zero
+    const flowRate_m3s = effectiveFlowRate / 1000 / 60;
     const massFlowRate = flowRate_m3s * fluidProps.density; // kg/s
 
     // Calculate panel temperature change due to heat input/loss
