@@ -87,7 +87,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                 type="number"
                 id="irradiance"
                 min={0}
-                max={1200}
                 step={10}
                 {...field}
                 className="w-full border rounded px-3 py-2"
@@ -127,7 +126,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                 id="ambientTemp"
                 type="number"
                 min={-40}
-                max={10000}
                 step={1}
                 {...field}
                 className="w-full border rounded px-3 py-2"
@@ -147,7 +145,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                 id="flowRate"
                 type="number"
                 min={0}
-                max={100}
                 step={0.1}
                 {...field}
                 className="w-full border rounded px-3 py-2"
@@ -167,7 +164,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                 type="number"
                 id="tankVolume"
                 min={1}
-                max={1000}
                 step={1}
                 {...field}
                 className="w-full border rounded px-3 py-2"
@@ -187,7 +183,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                 id="initialTemp"
                 type="number"
                 min={-40}
-                max={10000}
                 step={1}
                 {...field}
                 className="w-full border rounded px-3 py-2"
@@ -207,7 +202,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                 id="panelArea"
                 type="number"
                 min={0.1}
-                max={100}
                 step={0.1}
                 {...field}
                 className="w-full border rounded px-3 py-2"
@@ -227,7 +221,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
                 type="number"
                 id="elevationDiff"
                 min={1}
-                max={100}
                 step={1}
                 {...field}
                 className="w-full border rounded px-3 py-2"

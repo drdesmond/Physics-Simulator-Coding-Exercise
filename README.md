@@ -1,4 +1,4 @@
-# Physics Simulator Coding Exercise - Desmond
+# Physics Simulator Coding Exercise
 
 ## 🖥️ Deployed to: https://physics-simulator-coding.netlify.app/
 
@@ -16,6 +16,41 @@ See link to Physics Simulator Coding [Exercise](./public/assets/physics-simulato
 ## 🛠️ Project Overview
 
 This project simulates heat transfer in a solar thermal system, modeling the flow of energy from a solar panel to a storage tank via a circulating fluid. The simulation is interactive, allowing users to adjust system parameters and visualize the results in real time.
+
+---
+
+## 🚀 Usage Instructions
+
+1. **Install Node:**
+   Installed Node (tested with node V20) on your computer.
+2. **Install dependencies:**
+   From the folder root run
+   ```bash
+   yarn install
+   # or
+   npm install
+   ```
+3. **Start the development server:**
+   ```bash
+   yarn start
+   # or
+   npm start
+   ```
+4. **Open in your browser:**
+   Visit [http://localhost:3000](http://localhost:3000)
+5. **Adjust parameters** in the Control Panel and press **Start** to run the simulation. Press **Pause** or **Reset** as needed.
+
+## 🧪 Testing
+
+The project includes unit tests for physics calculations and component rendering. To run the tests:
+
+1. **Run all tests:**
+
+   ```bash
+   yarn test
+   # or
+   npm test
+   ```
 
 ---
 
@@ -238,38 +273,6 @@ newTankTemp = tankTemp + ΔT_tank
 - Panel thermal mass scales with area (10 kg/m²)
 - Natural convection is modeled using Churchill-Chu correlation
 - A small forced convection component simulates light wind
-
----
-
-## 🚀 Usage Instructions
-
-1. **Install dependencies:**
-   ```bash
-   yarn install
-   # or
-   npm install
-   ```
-2. **Start the development server:**
-   ```bash
-   yarn start
-   # or
-   npm start
-   ```
-3. **Open in your browser:**
-   Visit [http://localhost:3000](http://localhost:3000)
-4. **Adjust parameters** in the Control Panel and press **Start** to run the simulation. Press **Pause** or **Reset** as needed.
-
-## 🧪 Testing
-
-The project includes unit tests for physics calculations and component rendering. To run the tests:
-
-1. **Run all tests:**
-
-   ```bash
-   yarn test
-   # or
-   npm test
-   ```
 
 ---
 
