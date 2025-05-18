@@ -1,7 +1,8 @@
 # Physics Simulator Coding Exercise - Desmond
 
-<!-- ![System Diagram](./public/assets/solar-thermal-system-diagram.png)
-![System Video](./public/assets/Physics_Simulator_Coding_Exercise.mp4) -->
+## 🖥️ Deployed to: https://physics-simulator-coding.netlify.app/
+
+Test Live [Here](https://youtu.be/10L8m4ujDA0)
 
 ## 🖥️ Watch the demo
 
