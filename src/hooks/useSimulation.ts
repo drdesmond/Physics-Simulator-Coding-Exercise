@@ -75,7 +75,6 @@ export function useSimulation() {
     const Q = computeHeatInput(irradiance, efficiency, panelArea, prevState.panelTemp); // W
     const heatTransferCoeff = computeHeatTransferCoeff(prevState.panelTemp, ambientTemp);
     const Q_loss = computeHeatLoss(panelArea, prevState.panelTemp, ambientTemp, heatTransferCoeff); // W
-    const Q_net = Q - Q_loss;
 
     // --- Flow rate logic with passive return ---
     let effectiveFlowRate = flowRate;
@@ -104,6 +103,19 @@ export function useSimulation() {
     const flowRate_m3s = effectiveFlowRate / 1000 / 60;
     const massFlowRate = flowRate_m3s * fluidProps.density; // kg/s
 
+    // Calculate heat transfer between tank and panel
+    let Q_tank_to_panel = 0;
+    if (massFlowRate > 0) {
+      // Heat transfer from tank to panel when tank is hotter
+      if (prevState.tankTemp > prevState.panelTemp) {
+        Q_tank_to_panel =
+          massFlowRate * fluidProps.specificHeat * (prevState.tankTemp - prevState.panelTemp);
+      }
+    }
+
+    // Net heat to panel = solar input - ambient loss + heat from tank
+    const Q_net = Q - Q_loss + Q_tank_to_panel;
+
     // Calculate panel temperature change due to heat input/loss
     const deltaT_panel = computeTemperatureChange(Q_net, 0, 0, true, panelArea);
     const newPanelTemp = prevState.panelTemp + deltaT_panel;
@@ -111,7 +123,13 @@ export function useSimulation() {
     // Calculate fluid temperature change in panel
     let deltaT_fluid = 0;
     if (massFlowRate > 0) {
-      deltaT_fluid = Q_net / (massFlowRate * fluidProps.specificHeat);
+      if (prevState.tankTemp > prevState.panelTemp) {
+        // Tank is hotter: fluid cools down in panel
+        deltaT_fluid = -Q_tank_to_panel / (massFlowRate * fluidProps.specificHeat);
+      } else {
+        // Panel is hotter: fluid heats up in panel
+        deltaT_fluid = Q_net / (massFlowRate * fluidProps.specificHeat);
+      }
     }
 
     // Panel outlet temp = panel temp + fluid temp change
