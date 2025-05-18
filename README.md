@@ -32,7 +32,7 @@ This project simulates heat transfer in a solar thermal system, modeling the flo
    ```
 3. **Start the development server:**
    ```bash
-   yarn start
+   yarn
    # or
    npm start
    ```
