@@ -18,84 +18,75 @@ export const ThermalSystem: React.FC<ThermalSystemProps> = ({
   flowRate,
   efficiency,
 }) => {
-  const getGradient = (temp: number) => {
-    const clamped = Math.min(Math.max(temp, START_TEMP), MAX_TEMP);
-    const ratio = clamped / MAX_TEMP;
-
-    const redTop = Math.floor(255 * ratio);
-    const blueTop = Math.floor(200 * (1 - ratio));
-
-    const redBottom = Math.floor(200 + 55 * ratio);
-    const blueBottom = Math.floor(150 * (1 - ratio));
-
-    return `linear-gradient(to top, rgb(${redBottom}, 0, ${blueBottom}), rgb(${redTop}, 0, ${blueTop}))`;
+  const tempGradient = (T: number) => {
+    const clamp = Math.min(Math.max(T, START_TEMP), MAX_TEMP);
+    const r = Math.floor((255 * clamp) / MAX_TEMP);
+    const b = Math.floor(200 * (1 - clamp / MAX_TEMP));
+    return `linear-gradient(to top, rgb(${200 + (55 * clamp) / MAX_TEMP},0,${
+      150 * (1 - clamp / MAX_TEMP)
+    }), rgb(${r},0,${b}))`;
   };
 
+  const pipe = 'h-3 bg-flow-gradient bg-[length:200%_100%] animate-flow rounded';
+
   return (
-    <div className="px-1 md:px-6 py-6 bg-gray-100 rounded-xl shadow-md w-full max-w-6xl mx-auto">
+    <div className="px-2 py-6 bg-gray-100 rounded-xl shadow-md w-full max-w-5xl mx-auto">
       <h2 className="text-xl font-medium mb-6 text-center">Visual Thermal Simulation</h2>
 
-      {/* Sun + solar rays */}
-      <div className="flex items-start gap-0 md:gap-4 mb-6">
-        <div className="flex flex-col items-center">
-          <div className="text-yellow-500 text-3xl md:text-5xl animate-pulse">☀️</div>
-          <p className="text-xs text-gray-700 text-center">
-            Irradiance: <br />
-            {irradiance} W/m²
-          </p>
-          <div className="flex flex-col mt-2 gap-1 text-yellow-500 text-sm md:text-2xl">
-            <span className="-rotate-45 animate-pulse">➤</span>
-            <span className="-rotate-45 animate-pulse">➤</span>
-            <span className="-rotate-45 animate-pulse">➤</span>
+      {/* Sun & irradiance */}
+      <div>
+        <div className="flex justify-start items-center gap-4 mb-12">
+          <span className="text-4xl md:text-6xl animate-pulse">☀️</span>
+          <span className="text-sm text-gray-700">{irradiance} W/m²</span>
+        </div>
+      </div>
+      {/* Main schematic row */}
+      <div className="flex items-end gap-0 w-full">
+        {/* Panel column */}
+        <div className="flex flex-col items-center self-start">
+          {/* Top connection stub */}
+          <div className={pipe + ' w-8'} />
+          <div
+            className="w-14 md:w-28 h-48 border rounded text-white flex flex-col items-center justify-center"
+            style={{ background: tempGradient(panelTemp) }}
+          >
+            <span className="text-xs md:text-sm">{panelTemp.toFixed(3)} °F</span>
+            <span className="text-[10px] md:text-xs">Solar Panel</span>
+            <span className="text-[10px]">η {efficiency.toFixed(2)}</span>
+          </div>
+          {/* Bottom return stub */}
+          <div className={pipe + ' w-8'} />
+        </div>
+
+        {/* Pipes + pump block */}
+        <div className="flex-1 flex flex-col gap-[5rem] self-center items-stretch min-h-fit">
+          {/* Top pipe with pump (panel ➜ tank) */}
+          <div className="flex items-center w-full">
+            <div className={pipe + ' flex-1'} />
+            <div className="hidden sm:block mx-2 bg-green-600 text-white px-2 py-0.5 text-[10px] md:text-xs rounded-full shadow">
+              Pump ({fluid}, {flowRate} L/min)
+            </div>
+            <div className={pipe + ' flex-1 hidden sm:block'} />
+          </div>
+          {/* Bottom pipe (tank ➜ panel) */}
+          <div className="flex w-full justify-between">
+            <div className={pipe + ' flex-1'} />
           </div>
         </div>
 
-        {/* System Block */}
-        <div className="flex flex-col w-full gap-0">
-          {/* Top pipe with pump */}
-          <div className="flex items-end justify-between w-full lg:max-w-sm self-end">
-            <div className="h-3 bg-flow-gradient bg-[length:200%_100%] animate-flow relative overflow-hidden flex-1 rounded" />
-            <div className="hidden md:flex bg-green-500 text-white px-3 py-1 text-xs font-bold rounded-full shadow items-center justify-center">
-              <p>
-                Pump ({fluid}, {flowRate} L/h)
-              </p>
-            </div>
-            <div className="hidden md:block h-3 bg-flow-gradient bg-[length:200%_100%] animate-flow relative overflow-hidden flex-1 rounded md:mr-12" />
+        {/* Tank column */}
+        <div className="flex flex-col items-center self-end">
+          {/* Top stub */}
+          <div className={pipe + ' w-8'} />
+          <div
+            className="w-14 md:w-28 h-64 border rounded-3xl text-white flex flex-col items-center justify-center"
+            style={{ background: tempGradient(tankTemp) }}
+          >
+            <span className="text-xs md:text-sm">{tankTemp.toFixed(3)} °F</span>
+            <span className="text-[10px] md:text-xs">Storage Tank</span>
           </div>
-
-          {/* Main row: panel and tank */}
-          <div className="flex justify-between items-end w-full gap-10 z-10">
-            {/* Solar Panel */}
-            <div className="flex flex-col items-center self-start">
-              <div className="w-4 h-6 bg-flow-gradient bg-[length:200%_100%] animate-flow relative overflow-hidden mb-0 mt-0" />
-              <div
-                className="mb-[-2px] mt-0 w-12 md:w-28 h-44 border rounded text-white flex flex-col items-center justify-center"
-                style={{ background: getGradient(panelTemp) }}
-              >
-                <span>{panelTemp.toFixed(3)}°F</span>
-                <span className="text-xs">Solar Panel</span>
-                <span className="text-xs">Eff: {efficiency.toFixed(2)}</span>
-              </div>
-              <div className="w-4 h-20 bg-flow-gradient bg-[length:200%_100%] animate-flow relative overflow-hidden mt-0" />
-            </div>
-
-            {/* Storage Tank */}
-            <div className="flex flex-col items-center">
-              <div className="w-4 h-32 bg-flow-gradient bg-[length:200%_100%] animate-flow relative overflow-hidden mb-0 mt-0" />
-              <div
-                className="mb-[-2px] mt-0 w-12 md:w-28 h-44 border rounded-3xl text-white flex flex-col items-center justify-center"
-                style={{ background: getGradient(tankTemp) }}
-              >
-                <span>{tankTemp.toFixed(3)}°F</span>
-                <span className="text-xs">Storage Tank</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom return pipe: tank → panel */}
-          <div className="flex justify-end w-full relative mt-[-25px] lg:max-w-sm self-end">
-            <div className="h-3 bg-flow-gradient bg-[length:200%_100%] animate-flow relative overflow-hidden flex-1 rounded" />
-          </div>
+          <div className={pipe + ' w-8'} />
+          {/* Return stub aligns visually with bottom pipe */}
         </div>
       </div>
     </div>
