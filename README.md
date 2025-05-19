@@ -61,10 +61,10 @@ The project includes unit tests for physics calculations and component rendering
   - Fluid type (Water or Glycol)
   - Solar irradiance (W/m²)
   - Solar panel efficiency (0-1)
-  - Ambient temperature (°K)
+  - Ambient temperature (°F)
   - Flow rate (L/min)
   - Tank volume (L)
-  - Initial temperature (°K)
+  - Initial temperature (°F)
   - Panel area (m²)
   - Tank elevation difference (m) — positive means tank is above panel (enables gravity-driven return)
 - **Live-updating chart** of tank and panel temperatures, heat input, and heat loss
@@ -150,11 +150,11 @@ src/
 - **Irradiance (W/m²):** Solar power per unit area
 - **Efficiency (0-1):** Base efficiency of the solar panel at reference temperature
 - **Panel Area (m²):** Surface area of the solar collector
-- **Ambient Temp (°K):** Outside temperature in Kelvin
+- **Ambient Temp (°F):** Outside temperature in Fahrenheit
 - **Flow Rate (L/min):** Circulation rate of the fluid
 - **Tank Volume (L):** Storage capacity
-- **Initial Temp (°K):** Starting temperature in Kelvin
-- **Fluid Properties:** Specific heat (J/kg·K), density (kg/m³)
+- **Initial Temp (°F):** Starting temperature in Fahrenheit
+- **Fluid Properties:** Specific heat (J/kg·°F), density (kg/m³)
 
 ### **Temperature-Dependent Properties**
 
@@ -164,18 +164,18 @@ All air properties are calculated based on the film temperature (average of pane
 
 ```typescript
 // Air density (kg/m³) using ideal gas law
-ρ = P/(R*T)  // P = 101325 Pa, R = 287.05 J/(kg·K)
+ρ = P/(R*T)  // P = 101325 Pa, R = 53.35 ft·lbf/(lb·°R)
 
 // Air viscosity (kg/(m·s)) using Sutherland's formula
 μ = μ₀ * (T₀ + S)/(T + S) * (T/T₀)^1.5
-// where S = 110.4K, T₀ = 273.15K, μ₀ = 1.716e-5 kg/(m·s)
+// where S = 198.72°R, T₀ = 491.67°R, μ₀ = 1.716e-5 kg/(m·s)
 
-// Air thermal conductivity (W/(m·K))
-k = k₀ + slope * (T - 273.15)
-// where k₀ = 0.0242 W/(m·K), slope = 7.7e-5 W/(m·K²)
+// Air thermal conductivity (W/(m·°F))
+k = k₀ + slope * T
+// where k₀ = 0.0242 W/(m·°F), slope = 7.7e-5 W/(m·°F²)
 
 // Prandtl number
-Pr = 0.713 - 0.0001 * (T - 293.15)
+Pr = 0.713 - 0.0001 * T
 ```
 
 #### **2. Solar Panel Properties**
@@ -191,7 +191,7 @@ Panel efficiency decreases with temperature and thermal mass scales with area:
 // Panel thermal mass
 panelMass = PANEL_MASS_PER_M2 * area
 // where PANEL_MASS_PER_M2 = 10 kg/m²
-// specific heat = 900 J/(kg·K) for aluminum/glass construction
+// specific heat = 900 J/(kg·°F) for aluminum/glass construction
 ```
 
 ### **Formulas Used**

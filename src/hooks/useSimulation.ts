@@ -5,6 +5,7 @@ import {
   computeHeatLoss,
   computeHeatTransferCoeff,
   computeTemperatureChange,
+  computeThermosiphonFlow,
 } from '../utils/formulas';
 import { SimulationState, SimulationParams, SimulationAction } from '../types/index';
 import { DEFAULT_PARAMS } from '../constants/simulation';
@@ -89,17 +90,12 @@ export function useSimulation() {
       effectiveFlowRate = flowRate;
     } else if (flowRate > 0) {
       // Pump is nearly off, allow passive flow
-      // Gravity-driven: allow 0.2 L/min per meter elevationDiff if tank is above panel
-      let gravityFlow = 0;
-      if (elevationDiff > 0) {
-        gravityFlow = 0.2 * elevationDiff; // L/min
-      }
-      // Thermosiphon: allow 0.1 L/min per 10°F panel-tank difference if panel is hotter
-      let thermoFlow = 0;
-      if (prevState.panelTemp > prevState.tankTemp) {
-        thermoFlow = 0.1 * ((prevState.panelTemp - prevState.tankTemp) / 10);
-      }
-      effectiveFlowRate = Math.max(gravityFlow, thermoFlow, 0); // Use the stronger effect
+      effectiveFlowRate = computeThermosiphonFlow(
+        prevState.panelTemp,
+        prevState.tankTemp,
+        elevationDiff,
+        fluid
+      );
     } else {
       // Flow rate is exactly 0, no flow at all
       effectiveFlowRate = 0;

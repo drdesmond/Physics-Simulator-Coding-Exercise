@@ -1,3 +1,5 @@
+import { FluidType, FLUIDS } from '../models/Fluid';
+
 // Temperature-dependent air properties
 // All temperatures are in Fahrenheit
 
@@ -17,31 +19,30 @@ function getPanelThermalMass(area: number): number {
 function getAirPressure(elevationDiff: number): number {
   const seaLevelPressure = 101325; // Pa at sea level
   const g = 9.81; // m/s²
-  const R = 287.05; // J/(kg·K)
-  const T0 = 288.15; // K (15°C at sea level)
+  const R = 53.35; // ft·lbf/(lb·°R) - gas constant for air in Rankine
+  const T0 = 518.67; // °R (59°F at sea level)
 
-  // Convert elevation to meters (assuming positive is up)
-  const elevationM = Math.max(0, elevationDiff);
+  // Convert elevation to feet (assuming positive is up)
+  const elevationFt = Math.max(0, elevationDiff * 3.28084);
 
-  // Calculate pressure using barometric formula
-  return seaLevelPressure * Math.exp(-(g * elevationM) / (R * T0));
+  // Calculate pressure using barometric formula in Rankine
+  return seaLevelPressure * Math.exp(-(g * elevationFt) / (R * T0));
 }
 
 // Air density as a function of temperature and elevation (kg/m³)
 function getAirDensity(tempF: number, elevationDiff: number): number {
   // Using ideal gas law: ρ = P/(R*T)
   const pressure = getAirPressure(elevationDiff);
-  const R = 287.05; // J/(kg·K)
+  const R = 53.35; // ft·lbf/(lb·°R)
   const tempR = tempF + 459.67; // Convert to Rankine
-  const tempK = (tempR * 5) / 9; // Convert to Kelvin for calculation
-  return pressure / (R * tempK);
+  return pressure / (R * tempR);
 }
 
 // Air viscosity as a function of temperature (kg/(m·s))
 function getAirViscosity(tempF: number): number {
   // Sutherland's formula for air viscosity
-  const tempR = tempF + 459.67; // Convert to Rankine for calculation
-  const S = 110.4; // Sutherland's constant for air (°R)
+  const tempR = tempF + 459.67; // Convert to Rankine
+  const S = 198.72; // Sutherland's constant for air (°R)
   const T0 = 491.67; // Reference temperature (°R)
   const mu0 = 1.716e-5; // Reference viscosity at T0 (kg/(m·s))
   return ((mu0 * (T0 + S)) / (tempR + S)) * Math.pow(tempR / T0, 1.5);
@@ -62,6 +63,53 @@ function getPrandtlNumber(tempF: number, flowRate: number): number {
   const basePrandtl = 0.713 - 0.0001 * tempF;
   const flowEffect = Math.min(flowRate / 10, 1) * 0.1; // Up to 10% increase at high flow rates
   return basePrandtl * (1 + flowEffect);
+}
+
+// Calculate fluid density at given temperature (kg/m³)
+function getFluidDensity(tempF: number, fluidType: FluidType): number {
+  const baseDensity = FLUIDS[fluidType].density;
+  const thermalExpansion = 0.0002; // typical thermal expansion coefficient for liquids
+  const refTemp = 68; // reference temperature in °F
+  return baseDensity * (1 - thermalExpansion * (tempF - refTemp));
+}
+
+// Calculate thermosiphon flow rate (L/min)
+export function computeThermosiphonFlow(
+  panelTempF: number,
+  tankTempF: number,
+  elevationDiff: number,
+  fluidType: FluidType,
+  pipeDiameter: number = 0.02 // 20mm default pipe diameter
+): number {
+  // No flow if panel is colder than tank
+  if (panelTempF <= tankTempF) return 0;
+
+  // Calculate density difference
+  const panelDensity = getFluidDensity(panelTempF, fluidType);
+  const tankDensity = getFluidDensity(tankTempF, fluidType);
+  const densityDiff = tankDensity - panelDensity;
+
+  // Calculate driving head (m)
+  const g = 9.81; // m/s²
+  const drivingHead = (densityDiff / panelDensity) * elevationDiff;
+
+  // Calculate pipe friction
+  const pipeLength = elevationDiff * 1.5; // approximate pipe length
+  const pipeArea = Math.PI * Math.pow(pipeDiameter / 2, 2);
+  const fluidViscosity = FLUIDS[fluidType].viscosity;
+
+  // Estimate flow velocity using simplified Bernoulli equation with friction
+  const frictionFactor = 0.02; // typical for turbulent flow
+  const velocity = Math.sqrt(
+    (2 * g * drivingHead) / (1 + (frictionFactor * pipeLength) / pipeDiameter)
+  );
+
+  // Convert to flow rate (L/min)
+  const flowRate = velocity * pipeArea * 60 * 1000;
+
+  // Limit flow rate based on temperature difference
+  const maxFlowRate = 2 * elevationDiff; // maximum 2 L/min per meter of elevation
+  return Math.min(flowRate, maxFlowRate);
 }
 
 // Compute heat input with temperature-dependent efficiency
