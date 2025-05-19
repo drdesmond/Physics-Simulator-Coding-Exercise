@@ -1,74 +1,59 @@
-export type FluidType =
-  | 'water'
-  | 'glycol'
-  | 'mineral_oil'
-  | 'silicone_oil'
-  | 'propylene_glycol'
-  | 'ethylene_glycol';
+export type FluidType = 'water' | 'glycol' | 'mineral_oil' | 'silicone' | 'propylene_glycol';
 
 export interface FluidProperties {
   name: string;
   specificHeat: number; // J/(kg·K)
   density: number; // kg/m^3
+  viscosity: number; // kg/(m·s) at 20°C
+  thermalConductivity: number; // W/(m·K) at 20°C
   freezingPoint: number; // °F
   boilingPoint: number; // °F
-  viscosity: number; // cP at 68°F
-  thermalConductivity: number; // W/(m·K)
 }
 
 export const FLUIDS: Record<FluidType, FluidProperties> = {
   water: {
     name: 'Water',
     specificHeat: 4186, // J/(kg·K)
-    density: 997, // kg/m^3 at 68°F
+    density: 998, // kg/m^3 at 20°C
+    viscosity: 0.001002, // kg/(m·s) at 20°C
+    thermalConductivity: 0.598, // W/(m·K) at 20°C
     freezingPoint: 32, // °F
     boilingPoint: 212, // °F
-    viscosity: 1.0, // cP at 68°F
-    thermalConductivity: 0.6, // W/(m·K)
   },
   glycol: {
-    name: 'Glycol (50/50 Mix)',
-    specificHeat: 3500, // J/(kg·K)
-    density: 1050, // kg/m^3 at 68°F
-    freezingPoint: -35, // °F
-    boilingPoint: 225, // °F
-    viscosity: 3.5, // cP at 68°F
-    thermalConductivity: 0.4, // W/(m·K)
+    name: 'Ethylene Glycol',
+    specificHeat: 2382, // J/(kg·K) at 20°C
+    density: 1113, // kg/m^3 at 20°C
+    viscosity: 0.0161, // kg/(m·s) at 20°C
+    thermalConductivity: 0.258, // W/(m·K) at 20°C
+    freezingPoint: 8.6, // °F (50% solution)
+    boilingPoint: 225, // °F (50% solution)
   },
   mineral_oil: {
     name: 'Mineral Oil',
-    specificHeat: 1880, // J/(kg·K)
-    density: 850, // kg/m^3 at 68°F
+    specificHeat: 1880, // J/(kg·K) at 20°C
+    density: 850, // kg/m^3 at 20°C
+    viscosity: 0.034, // kg/(m·s) at 20°C
+    thermalConductivity: 0.138, // W/(m·K) at 20°C
     freezingPoint: -40, // °F
-    boilingPoint: 300, // °F
-    viscosity: 20, // cP at 68°F
-    thermalConductivity: 0.15, // W/(m·K)
+    boilingPoint: 320, // °F
   },
-  silicone_oil: {
+  silicone: {
     name: 'Silicone Oil',
-    specificHeat: 1460, // J/(kg·K)
-    density: 920, // kg/m^3 at 68°F
+    specificHeat: 1465, // J/(kg·K) at 20°C
+    density: 920, // kg/m^3 at 20°C
+    viscosity: 0.048, // kg/(m·s) at 20°C
+    thermalConductivity: 0.1, // W/(m·K) at 20°C
     freezingPoint: -76, // °F
     boilingPoint: 392, // °F
-    viscosity: 50, // cP at 68°F
-    thermalConductivity: 0.1, // W/(m·K)
   },
   propylene_glycol: {
-    name: 'Propylene Glycol (100%)',
-    specificHeat: 2480, // J/(kg·K)
-    density: 1036, // kg/m^3 at 68°F
-    freezingPoint: -76, // °F
-    boilingPoint: 370, // °F
-    viscosity: 40, // cP at 68°F
-    thermalConductivity: 0.34, // W/(m·K)
-  },
-  ethylene_glycol: {
-    name: 'Ethylene Glycol (100%)',
-    specificHeat: 2380, // J/(kg·K)
-    density: 1113, // kg/m^3 at 68°F
-    freezingPoint: -9, // °F
-    boilingPoint: 387, // °F
-    viscosity: 16.1, // cP at 68°F
-    thermalConductivity: 0.26, // W/(m·K)
+    name: 'Propylene Glycol',
+    specificHeat: 2480, // J/(kg·K) at 20°C
+    density: 1036, // kg/m^3 at 20°C
+    viscosity: 0.042, // kg/(m·s) at 20°C
+    thermalConductivity: 0.147, // W/(m·K) at 20°C
+    freezingPoint: -60, // °F (50% solution)
+    boilingPoint: 230, // °F (50% solution)
   },
 };

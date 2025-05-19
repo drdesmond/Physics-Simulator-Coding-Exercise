@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { SimulationParams } from '../types/index';
-import { FLUIDS } from '../models/Fluid';
+import { FluidType } from '../models/Fluid';
 
 export type ControlPanelProps = {
   onStart: (params: SimulationParams) => void;
@@ -12,10 +12,10 @@ export type ControlPanelProps = {
   data: any[];
 };
 
-const fluidOptions = Object.values(FLUIDS).map((fluid) => ({
-  label: fluid.name,
-  value: fluid.name,
-}));
+const fluidOptions: { label: string; value: FluidType }[] = [
+  { label: 'Water', value: 'water' },
+  { label: 'Glycol', value: 'glycol' },
+];
 
 export const ControlPanel: React.FC<ControlPanelProps> = ({
   onStart,
