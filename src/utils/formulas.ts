@@ -84,6 +84,16 @@ export function computeThermosiphonFlow(
   // No flow if panel is colder than tank
   if (panelTempF <= tankTempF) return 0;
 
+  // Calculate temperature difference
+  const tempDiff = panelTempF - tankTempF;
+
+  // Critical temperature difference needed to overcome static friction
+  // This depends on fluid type and pipe diameter
+  const criticalTempDiff = 5 * (FLUIDS[fluidType].viscosity / 0.001002); // Scale based on water's viscosity
+
+  // If temperature difference is below critical, no flow occurs
+  if (tempDiff < criticalTempDiff) return 0;
+
   // Calculate density difference
   const panelDensity = getFluidDensity(panelTempF, fluidType);
   const tankDensity = getFluidDensity(tankTempF, fluidType);
@@ -98,17 +108,39 @@ export function computeThermosiphonFlow(
   const pipeArea = Math.PI * Math.pow(pipeDiameter / 2, 2);
   const fluidViscosity = FLUIDS[fluidType].viscosity;
 
-  // Estimate flow velocity using simplified Bernoulli equation with friction
-  const frictionFactor = 0.02; // typical for turbulent flow
-  const velocity = Math.sqrt(
-    (2 * g * drivingHead) / (1 + (frictionFactor * pipeLength) / pipeDiameter)
-  );
+  // Initial guess for velocity
+  let velocity = Math.sqrt(2 * g * drivingHead);
+
+  // Iterative calculation of friction factor and velocity
+  const maxIterations = 10;
+  const tolerance = 0.001;
+  let prevVelocity = 0;
+
+  for (let i = 0; i < maxIterations; i++) {
+    // Calculate Reynolds number
+    const reynolds = (velocity * pipeDiameter * panelDensity) / fluidViscosity;
+
+    // Calculate friction factor using Colebrook equation (simplified for turbulent flow)
+    const frictionFactor =
+      reynolds < 2300
+        ? 64 / reynolds // Laminar flow
+        : 0.25 / Math.pow(Math.log10(2.51 / (reynolds * Math.sqrt(0.25))), 2); // Turbulent flow
+
+    // Calculate new velocity
+    velocity = Math.sqrt(
+      (2 * g * drivingHead) / (1 + (frictionFactor * pipeLength) / pipeDiameter)
+    );
+
+    // Check for convergence
+    if (Math.abs(velocity - prevVelocity) < tolerance) break;
+    prevVelocity = velocity;
+  }
 
   // Convert to flow rate (L/min)
   const flowRate = velocity * pipeArea * 60 * 1000;
 
-  // Limit flow rate based on temperature difference
-  const maxFlowRate = 2 * elevationDiff; // maximum 2 L/min per meter of elevation
+  // Limit flow rate based on temperature difference and pipe size
+  const maxFlowRate = 2 * elevationDiff * (pipeDiameter / 0.02); // maximum 2 L/min per meter of elevation, scaled by pipe diameter
   return Math.min(flowRate, maxFlowRate);
 }
 
