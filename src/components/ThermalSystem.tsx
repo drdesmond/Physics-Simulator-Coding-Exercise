@@ -1,5 +1,6 @@
 import React from 'react';
 import { SimulationParams } from '../types/index';
+import { FLUIDS } from '../models/Fluid';
 
 const MAX_TEMP = 10000; // 10000°F
 const START_TEMP = -40; // -40°F
@@ -32,6 +33,9 @@ export const ThermalSystem: React.FC<ThermalSystemProps> = ({
   return (
     <div className="px-2 py-6 bg-gray-100 rounded-xl shadow-md w-full max-w-5xl mx-auto">
       <h2 className="text-xl font-medium mb-6 text-center">Visual Thermal Simulation</h2>
+      <p className="text-sm text-gray-700 mb-6 text-center">
+        Demonstration only, implementation matches the image in the exercise.
+      </p>
 
       {/* Sun & irradiance */}
       <div>
@@ -64,7 +68,7 @@ export const ThermalSystem: React.FC<ThermalSystemProps> = ({
           <div className="flex items-center w-full">
             <div className={pipe + ' flex-1'} />
             <div className="hidden sm:block mx-2 bg-green-600 text-white px-2 py-0.5 text-[10px] md:text-xs rounded-full shadow">
-              Pump ({fluid}, {flowRate} L/min)
+              Pump ({FLUIDS?.[fluid]?.label || ''}, {flowRate} L/min)
             </div>
             <div className={pipe + ' flex-1 hidden sm:block'} />
           </div>
@@ -87,7 +91,6 @@ export const ThermalSystem: React.FC<ThermalSystemProps> = ({
             <span className="text-[10px] md:text-xs">Storage Tank</span>
           </div>
           <div className={pipe + ' w-8'} />
-          {/* Return stub aligns visually with bottom pipe */}
         </div>
       </div>
     </div>

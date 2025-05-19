@@ -119,7 +119,7 @@ src/
 
 ### **Simulation Flow**
 
-- The simulation models the top pipe as pump-driven and the bottom pipe as a passive return:
+- The simulation models a thermosiphon fluid heater system, the top pipe is pump-driven and the bottom pipe as a passive return:
 - If the pump is ON (flow rate > 0), flow is as set by the user.
 - If the pump is OFF (flow rate = 0), the simulation checks for passive return:
   - If the tank is above the panel (positive elevation difference), gravity-driven flow is enabled.
@@ -295,6 +295,53 @@ newTankTemp = tankTemp + ΔT_tank
 - **Panel Management:** The control panel automatically closes when simulation starts, and the visualization panel opens automatically.
 
 ---
+
+### **Fluid Properties**
+
+The simulation supports multiple heat transfer fluids with the following properties:
+
+#### **Currently Used Properties**
+
+- **Specific Heat (J/(kg·K))**: Used to calculate temperature changes in the fluid
+- **Density (kg/m³)**: Used to calculate buoyancy forces and flow rates
+- **Viscosity (kg/(m·s))**: Used to calculate flow resistance and critical startup temperature
+
+#### **Properties Not Currently Modeled**
+
+- **Thermal Conductivity (W/(m·K))**: Not currently used in heat transfer calculations
+- **Freezing Point (°F)**: Not currently checked in the simulation
+- **Boiling Point (°F)**: Not currently checked in the simulation
+
+### **Available Fluids**
+
+1. **Water**
+
+   - Lowest viscosity
+   - Highest specific heat
+   - Best for moderate temperature ranges
+
+2. **Ethylene Glycol**
+
+   - Higher viscosity than water
+   - Lower freezing point
+   - Good for cold climates
+
+3. **Mineral Oil**
+
+   - Highest viscosity
+   - Highest boiling point
+   - Good for high-temperature systems
+
+4. **Silicone Oil**
+
+   - Very high viscosity
+   - Wide temperature range
+   - Good for extreme conditions
+
+5. **Propylene Glycol**
+   - Medium viscosity
+   - Low freezing point
+   - Food-safe alternative to ethylene glycol
 
 ## 📄 License
 
