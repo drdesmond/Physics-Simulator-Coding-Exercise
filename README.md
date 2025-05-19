@@ -151,7 +151,7 @@ src/
 - **Efficiency (0-1):** Base efficiency of the solar panel at reference temperature
 - **Panel Area (m²):** Surface area of the solar collector
 - **Ambient Temp (°F):** Outside temperature in Fahrenheit (also the initial temperature of the panel)
-- **Flow Rate (L/min):** Circulation rate of the fluid
+- **Flow Rate (L/min):** Pump flow rate of the fluid
 - **Tank Volume (L):** Storage capacity
 - **Initial Temp (°F):** Starting temperature in Fahrenheit
 - **Fluid Properties:** Specific heat (J/kg·°F), density (kg/m³)

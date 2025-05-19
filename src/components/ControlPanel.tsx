@@ -118,7 +118,9 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           <label className="block font-medium" htmlFor="ambientTemp">
             Ambient Temp (°F)
           </label>
-          <span className="text-xs text-gray-500">Outside temp (initial temp of Panel)</span>
+          <span className="block md:hidden lg:block text-xs text-gray-500">
+            Outside temp (initial temp of Panel)
+          </span>
           <Controller
             name="ambientTemp"
             control={control}
@@ -138,6 +140,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           <label className="block font-medium mb-1" htmlFor="flowRate">
             Flow Rate (L/min)
           </label>
+          <span className="block md:hidden lg:block text-xs text-gray-500">Pump flow rate</span>
           <Controller
             name="flowRate"
             control={control}
@@ -157,6 +160,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           <label className="block font-medium mb-1" htmlFor="tankVolume">
             Tank Volume (L)
           </label>
+          <span className="block md:hidden lg:block text-xs text-gray-500">Volume of the tank</span>
           <Controller
             name="tankVolume"
             control={control}
