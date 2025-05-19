@@ -115,9 +115,10 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           />
         </div>
         <div>
-          <label className="block font-medium mb-1" htmlFor="ambientTemp">
+          <label className="block font-medium" htmlFor="ambientTemp">
             Ambient Temp (°F)
           </label>
+          <span className="text-xs text-gray-500">Outside temp (initial temp of Panel)</span>
           <Controller
             name="ambientTemp"
             control={control}
