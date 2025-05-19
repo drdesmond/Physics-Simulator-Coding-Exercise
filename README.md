@@ -9,13 +9,13 @@ Test Live [Here](https://youtu.be/10L8m4ujDA0)
 Watch Demo on [Youtube](https://youtu.be/10L8m4ujDA0)
 [![Watch the demo](./public/assets/solar-thermal-system-diagram.png)](https://youtu.be/QDBnxJsE0b8)
 
-_Video: Video of the solar thermal system showing the Sun, Solar Panel, Pump, and Storage Tank in a closed-loop heat transfer system exposed to environmental conditions._
+_Video: Video of the solar thermosiphon fluid heater system showing the Sun, Solar Panel, Pump, and Storage Tank in a closed-loop heat transfer system exposed to environmental conditions._
 
 See link to Physics Simulator Coding [Exercise](./public/assets/physics-simulator-coding-exercise.pdf)
 
 ## 🛠️ Project Overview
 
-This project simulates heat transfer in a solar thermal system, modeling the flow of energy from a solar panel to a storage tank via a circulating fluid. The simulation is interactive, allowing users to adjust system parameters and visualize the results in real time.
+This project simulates heat transfer in a solar thermosiphon fluid heater system, modeling the flow of energy from a solar panel to a storage tank via a circulating fluid. The simulation is interactive, allowing users to adjust system parameters and visualize the results in real time.
 
 ---
 
