@@ -103,6 +103,8 @@ export function useSimulation() {
     }
     // flowRate: L/min -> m^3/s
     const flowRate_m3s = effectiveFlowRate / 1000 / 60;
+    // The mass flow rate is used to calculate the heat transfer between the panel and tank,
+    // which is crucial for determining temperature changes in the system.
     const massFlowRate = flowRate_m3s * fluidProps.density; // kg/s
 
     // Calculate heat transfer between tank and panel
