@@ -69,6 +69,7 @@ function getPrandtlNumber(tempF: number, flowRate: number): number {
 function getFluidDensity(tempF: number, fluidType: FluidType): number {
   const baseDensity = FLUIDS[fluidType].density;
   const thermalExpansion = 0.0002; // typical thermal expansion coefficient for liquids
+  // It's the temperature at which the base density is measured (from the FLUIDS object)
   const refTemp = 68; // reference temperature in °F
   return baseDensity * (1 - thermalExpansion * (tempF - refTemp));
 }
