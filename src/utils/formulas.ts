@@ -1,4 +1,5 @@
-import { FluidType, FLUIDS } from '../models/Fluid';
+import { FLUIDS } from '../models/Fluid';
+import { FluidType } from '../types';
 
 // Temperature-dependent air properties
 // All temperatures are in Fahrenheit

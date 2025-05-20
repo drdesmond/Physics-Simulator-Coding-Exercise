@@ -1,5 +1,4 @@
-import { FluidType } from '../models/Fluid';
-import { SimulationParams } from '../types';
+import { SimulationParams, FluidType } from '../types';
 
 export const DEFAULT_PARAMS: SimulationParams = {
   fluid: 'water' as FluidType,

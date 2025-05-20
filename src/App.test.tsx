@@ -4,8 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { useForm, FormProvider } from 'react-hook-form';
 import App from './App';
 import { useSimulation } from './hooks/useSimulation';
-import { SimulationState, SimulationParams } from './types';
-import { FluidType } from './models/Fluid';
+import { SimulationState, SimulationParams, FluidType } from './types';
 
 // Mock ResizeObserver
 class ResizeObserverMock {

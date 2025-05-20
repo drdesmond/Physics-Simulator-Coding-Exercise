@@ -1,17 +1,4 @@
-export type FluidType =
-  | 'water'
-  | 'ethylene_glycol'
-  | 'mineral_oil'
-  | 'silicone'
-  | 'propylene_glycol';
-
-export interface FluidProperties {
-  name: string;
-  label: string;
-  specificHeat: number; // J/(kg·K)
-  density: number; // kg/m^3
-  viscosity: number; // kg/(m·s) at 20°C
-}
+import { FluidType, FluidProperties } from '../types/index';
 
 export const FLUIDS: Record<FluidType, FluidProperties> = {
   water: {
