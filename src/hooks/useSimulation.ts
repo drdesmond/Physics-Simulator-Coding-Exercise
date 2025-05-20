@@ -84,8 +84,6 @@ export function useSimulation() {
       heatTransferCoeff,
       elevationDiff
     ); // W
-
-    console.log({ flowRate });
     // --- Flow rate logic with passive return ---
     let effectiveFlowRate = flowRate;
     if (flowRate > 0) {
