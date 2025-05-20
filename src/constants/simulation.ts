@@ -5,7 +5,7 @@ export const DEFAULT_PARAMS: SimulationParams = {
   fluid: 'water' as FluidType,
   irradiance: 1000,
   efficiency: 0.8,
-  ambientTemp: 70, // 70°F
+  ambientTemp: 100, // 100°F
   flowRate: 1,
   tankVolume: 200,
   initialTemp: 68, // 68°F

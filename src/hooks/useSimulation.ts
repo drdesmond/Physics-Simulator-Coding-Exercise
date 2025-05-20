@@ -72,9 +72,11 @@ export function useSimulation() {
     const fluidMass = tankVolumeM3 * fluidProps.density;
     const prevState = stateRef.current;
 
-    // Compute heat input and losses
+    // Calculates how much heat the solar panel generates from sunlight
     const Q = computeHeatInput(irradiance, efficiency, panelArea, prevState.panelTemp); // W
+    // Calculates a coefficient (h) that represents how easily heat can transfer from the panel to the air
     const heatTransferCoeff = computeHeatTransferCoeff(prevState.panelTemp, ambientTemp);
+    // Uses the coefficient from computeHeatTransferCoeff to calculate the actual amount of heat lost
     const Q_loss = computeHeatLoss(
       panelArea,
       prevState.panelTemp,
@@ -83,24 +85,24 @@ export function useSimulation() {
       elevationDiff
     ); // W
 
+    console.log({ flowRate });
     // --- Flow rate logic with passive return ---
     let effectiveFlowRate = flowRate;
-    if (flowRate > 0.01) {
-      // Pump is on, use the set flow rate
-      effectiveFlowRate = flowRate;
-    } else if (flowRate > 0) {
-      // Pump is nearly off, allow passive flow
+    if (flowRate > 0) {
+      // calculates the natural circulation flow rate of fluid in the thermosiphon system
+      // based on the temperature difference between the panel and tank, where hotter fluid
+      //  rises and colder fluid sinks.
       effectiveFlowRate = computeThermosiphonFlow(
         prevState.panelTemp,
         prevState.tankTemp,
         elevationDiff,
         fluid
       );
+      effectiveFlowRate = Math.min(effectiveFlowRate, flowRate);
     } else {
       // Flow rate is exactly 0, no flow at all
       effectiveFlowRate = 0;
     }
-
     // flowRate: L/min -> m^3/s
     const flowRate_m3s = effectiveFlowRate / 1000 / 60;
     const massFlowRate = flowRate_m3s * fluidProps.density; // kg/s

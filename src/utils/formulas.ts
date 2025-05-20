@@ -152,6 +152,9 @@ export function computeHeatInput(
   panelTempF: number
 ): number {
   // Reference temperature for efficiency (typically 77°F)
+  // 77°F is the standard temperature at which solar panel efficiency is rated
+  // This is known as the Standard Test Condition (STC) temperature
+  // Manufacturers provide efficiency ratings at this temperature
   const refTempF = 77;
 
   // Calculate temperature-dependent efficiency

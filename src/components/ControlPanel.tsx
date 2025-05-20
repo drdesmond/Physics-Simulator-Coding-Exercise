@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { SimulationParams } from '../types/index';
 import { FLUIDS } from '../models/Fluid';
+import { DEFAULT_PARAMS } from '../constants/simulation';
 
 export type ControlPanelProps = {
   onStart: (params: SimulationParams) => void;
@@ -257,7 +258,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           type="button"
           className="bg-gray-500 hover:bg-gray-600 disabled:bg-gray-400 text-white font-semibold px-6 py-2 rounded shadow disabled:cursor-not-allowed"
           onClick={() => {
-            reset(defaultValues);
+            reset(DEFAULT_PARAMS);
             onReset();
           }}
         >
