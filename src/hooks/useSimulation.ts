@@ -72,8 +72,11 @@ export function useSimulation() {
     const fluidMass = tankVolumeM3 * fluidProps.density;
     const prevState = stateRef.current;
 
+    //1. Calculate the heat input from the solar panel
     // Calculates how much heat the solar panel generates from sunlight
     const Q = computeHeatInput(irradiance, efficiency, panelArea, prevState.panelTemp); // W
+
+    //2. Calculate the heat loss from the solar panel
     // Calculates a coefficient (h) that represents how easily heat can transfer from the panel to the air
     const heatTransferCoeff = computeHeatTransferCoeff(prevState.panelTemp, ambientTemp);
     // Uses the coefficient from computeHeatTransferCoeff to calculate the actual amount of heat lost
@@ -84,7 +87,8 @@ export function useSimulation() {
       heatTransferCoeff,
       elevationDiff
     ); // W
-    // --- Flow rate logic with passive return ---
+
+    //3. Calculate the flow rate of the fluid
     let effectiveFlowRate = flowRate;
     if (flowRate > 0) {
       // calculates the natural circulation flow rate of fluid in the thermosiphon system
@@ -96,6 +100,7 @@ export function useSimulation() {
         elevationDiff,
         fluid
       );
+      // limits the flow rate to the maximum flow rate
       effectiveFlowRate = Math.min(effectiveFlowRate, flowRate);
     } else {
       // Flow rate is exactly 0, no flow at all
@@ -107,11 +112,15 @@ export function useSimulation() {
     // which is crucial for determining temperature changes in the system.
     const massFlowRate = flowRate_m3s * fluidProps.density; // kg/s
 
-    // Calculate heat transfer between tank and panel
+    //4. Calculate the heat transfer between the tank and panel
     let Q_tank_to_panel = 0;
     if (massFlowRate > 0) {
       // Heat transfer from tank to panel when tank is hotter
       if (prevState.tankTemp > prevState.panelTemp) {
+        // The formula is derived from the basic heat transfer equation:
+        // Q = m × c × ΔT, rearranged to solve for Q, where Q is the heat transfer,
+        // m is the mass of the fluid, c is the specific heat of the fluid,
+        // and ΔT is the temperature change.
         Q_tank_to_panel =
           massFlowRate * fluidProps.specificHeat * (prevState.tankTemp - prevState.panelTemp);
       }
@@ -126,12 +135,23 @@ export function useSimulation() {
 
     // Calculate fluid temperature change in panel
     let deltaT_fluid = 0;
+
     if (massFlowRate > 0) {
       if (prevState.tankTemp > prevState.panelTemp) {
         // Tank is hotter: fluid cools down in panel
+        // The formula is derived from the basic heat transfer equation:
+        // Q = m × c × ΔT, where
+        //  Q is the heat transfer
+        //  m is the mass of the fluid
+        //  c is the specific heat of the fluid
+        //  ΔT is the temperature change.
+        // solving for ΔT
         deltaT_fluid = -Q_tank_to_panel / (massFlowRate * fluidProps.specificHeat);
       } else {
         // Panel is hotter: fluid heats up in panel
+        // The formula is derived from the basic heat transfer equation:
+        // Q = m × c × ΔT
+        //solving for ΔT
         deltaT_fluid = Q_net / (massFlowRate * fluidProps.specificHeat);
       }
     }
@@ -140,6 +160,7 @@ export function useSimulation() {
     const panelOutletTemp = newPanelTemp + deltaT_fluid;
 
     // For a well-mixed tank, energy delivered per second:
+    // Q = m × c × ΔT
     const Q_delivered =
       massFlowRate * fluidProps.specificHeat * (panelOutletTemp - prevState.tankTemp);
 
@@ -147,6 +168,7 @@ export function useSimulation() {
     const deltaT_tank = computeTemperatureChange(Q_delivered, fluidMass, fluidProps.specificHeat);
     const newTankTemp = prevState.tankTemp + deltaT_tank;
 
+    //6. Update the tank and panel temperatures
     const tickData = {
       time: prevState.time + 1,
       tankTemp: newTankTemp,
