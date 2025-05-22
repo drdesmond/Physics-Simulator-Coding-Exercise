@@ -76,6 +76,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             step={10}
             {...register('irradiance')}
             className="w-full border rounded px-3 py-2"
+            aria-label="Solar Irradiance"
           />
         </div>
         <div>
@@ -90,6 +91,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             step={0.01}
             {...register('efficiency')}
             className="w-full border rounded px-3 py-2"
+            aria-label="Solar Panel Efficiency"
           />
         </div>
         <div>
@@ -106,6 +108,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             step={1}
             {...register('ambientTemp')}
             className="w-full border rounded px-3 py-2"
+            aria-label="Ambient Temperature"
           />
         </div>
         <div>
@@ -120,6 +123,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             step={0.1}
             {...register('flowRate')}
             className="w-full border rounded px-3 py-2"
+            aria-label="Flow Rate"
           />
         </div>
         <div>
@@ -134,6 +138,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             step={1}
             {...register('tankVolume')}
             className="w-full border rounded px-3 py-2"
+            aria-label="Tank Volume"
           />
         </div>
         <div>
@@ -147,6 +152,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             step={1}
             {...register('initialTemp')}
             className="w-full border rounded px-3 py-2"
+            aria-label="Initial Tank Temperature"
           />
         </div>
         <div>
@@ -160,6 +166,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             step={0.1}
             {...register('panelArea')}
             className="w-full border rounded px-3 py-2"
+            aria-label="Panel Area"
           />
         </div>
         <div>
@@ -173,6 +180,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             step={1}
             {...register('elevationDiff')}
             className="w-full border rounded px-3 py-2"
+            aria-label="Tank Elevation Difference"
           />
           <span className="text-xs text-gray-500">
             Difference between the solar panel position and the tank height
@@ -184,6 +192,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           type="submit"
           className="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white font-semibold px-6 py-2 rounded shadow disabled:cursor-not-allowed"
           disabled={isRunning && !data}
+          aria-label="Start Simulation"
         >
           Start
         </button>
@@ -192,6 +201,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           className="bg-yellow-500 hover:bg-yellow-600 disabled:bg-gray-400 text-white font-semibold px-6 py-2 rounded shadow disabled:cursor-not-allowed"
           onClick={onPause}
           disabled={!isRunning}
+          aria-label="Pause Simulation"
         >
           Pause
         </button>
@@ -202,6 +212,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             reset(DEFAULT_PARAMS);
             onReset();
           }}
+          aria-label="Reset Simulation"
         >
           Reset
         </button>
