@@ -32,7 +32,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
 
   const onSubmit: SubmitHandler<SimulationParams> = (data) => {
     // Ensure all numeric values are numbers
-    console.log('The data is: ', data);
     const numericData = {
       ...data,
       irradiance: Number(data.irradiance),
