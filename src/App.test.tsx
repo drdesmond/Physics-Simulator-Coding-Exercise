@@ -288,8 +288,8 @@ describe('Solar Thermal System Simulator App', () => {
       reset: mockReset,
     });
 
-    const startBtn = screen.getByRole('button', { name: 'Start' });
-    const pauseBtn = screen.getByRole('button', { name: 'Pause' });
+    const startBtn = screen.getByRole('button', { name: /Start/i });
+    const pauseBtn = screen.getByRole('button', { name: /Pause/i });
 
     // Start simulation
     await user.click(startBtn);

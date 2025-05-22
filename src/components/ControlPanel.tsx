@@ -192,7 +192,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           type="submit"
           className="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white font-semibold px-6 py-2 rounded shadow disabled:cursor-not-allowed"
           disabled={isRunning && !data}
-          aria-label="Start Simulation"
         >
           Start
         </button>
@@ -201,7 +200,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           className="bg-yellow-500 hover:bg-yellow-600 disabled:bg-gray-400 text-white font-semibold px-6 py-2 rounded shadow disabled:cursor-not-allowed"
           onClick={onPause}
           disabled={!isRunning}
-          aria-label="Pause Simulation"
         >
           Pause
         </button>
@@ -212,7 +210,6 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             reset(DEFAULT_PARAMS);
             onReset();
           }}
-          aria-label="Reset Simulation"
         >
           Reset
         </button>

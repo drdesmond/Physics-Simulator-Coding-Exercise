@@ -207,7 +207,7 @@ export function useSimulation() {
 
   const reset = useCallback(() => {
     if (paramsRef.current) {
-      dispatch({ type: 'RESET', payload: paramsRef.current });
+      dispatch({ type: 'RESET', payload: DEFAULT_PARAMS });
     }
     if (intervalRef.current) clearInterval(intervalRef.current);
     setData([]);
