@@ -1,5 +1,5 @@
 import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { SimulationParams } from '../types/index';
 import { FLUIDS } from '../models/Fluid';
 
@@ -25,7 +25,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
   defaultValues,
   data,
 }) => {
-  const { control, handleSubmit, reset } = useForm<SimulationParams>({
+  const { control, handleSubmit, reset, register } = useForm<SimulationParams>({
     defaultValues,
   });
 
@@ -56,62 +56,40 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           <label className="block font-medium mb-1" htmlFor="fluid">
             Fluid
           </label>
-          <Controller
-            name="fluid"
-            control={control}
-            render={({ field }) => (
-              <select
-                {...field}
-                id="fluid"
-                name="fluid"
-                className="w-full border rounded px-3 py-2"
-              >
-                {fluidOptions.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-            )}
-          />
+
+          <select id="fluid" {...register('fluid')} className="w-full border rounded px-3 py-2">
+            {fluidOptions.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label className="block font-medium mb-1" htmlFor="irradiance">
             Solar Irradiance (W/m²)
           </label>
-          <Controller
-            name="irradiance"
-            control={control}
-            render={({ field }) => (
-              <input
-                type="number"
-                id="irradiance"
-                min={0}
-                step={10}
-                {...field}
-                className="w-full border rounded px-3 py-2"
-              />
-            )}
+          <input
+            type="number"
+            id="irradiance"
+            min={0}
+            step={10}
+            {...register('irradiance')}
+            className="w-full border rounded px-3 py-2"
           />
         </div>
         <div>
           <label className="block font-medium mb-1" htmlFor="efficiency">
             Solar Panel Efficiency (0 - 1)
           </label>
-          <Controller
-            name="efficiency"
-            control={control}
-            render={({ field }) => (
-              <input
-                id="efficiency"
-                type="number"
-                min={0}
-                max={1}
-                step={0.01}
-                {...field}
-                className="w-full border rounded px-3 py-2"
-              />
-            )}
+          <input
+            id="efficiency"
+            type="number"
+            min={0}
+            max={1}
+            step={0.01}
+            {...register('efficiency')}
+            className="w-full border rounded px-3 py-2"
           />
         </div>
         <div>
@@ -121,19 +99,13 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           <span className="block md:hidden lg:block text-xs text-gray-500">
             Outside temp (initial temp of Panel)
           </span>
-          <Controller
-            name="ambientTemp"
-            control={control}
-            render={({ field }) => (
-              <input
-                id="ambientTemp"
-                type="number"
-                min={-40}
-                step={1}
-                {...field}
-                className="w-full border rounded px-3 py-2"
-              />
-            )}
+          <input
+            id="ambientTemp"
+            type="number"
+            min={-40}
+            step={1}
+            {...register('ambientTemp')}
+            className="w-full border rounded px-3 py-2"
           />
         </div>
         <div>
@@ -141,19 +113,13 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             Flow Rate (L/min)
           </label>
           <span className="block md:hidden lg:block text-xs text-gray-500">Pump flow rate</span>
-          <Controller
-            name="flowRate"
-            control={control}
-            render={({ field }) => (
-              <input
-                id="flowRate"
-                type="number"
-                min={0}
-                step={0.1}
-                {...field}
-                className="w-full border rounded px-3 py-2"
-              />
-            )}
+          <input
+            id="flowRate"
+            type="number"
+            min={0}
+            step={0.1}
+            {...register('flowRate')}
+            className="w-full border rounded px-3 py-2"
           />
         </div>
         <div>
@@ -161,76 +127,52 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
             Tank Volume (L)
           </label>
           <span className="block md:hidden lg:block text-xs text-gray-500">Volume of the tank</span>
-          <Controller
-            name="tankVolume"
-            control={control}
-            render={({ field }) => (
-              <input
-                type="number"
-                id="tankVolume"
-                min={1}
-                step={1}
-                {...field}
-                className="w-full border rounded px-3 py-2"
-              />
-            )}
+          <input
+            type="number"
+            id="tankVolume"
+            min={1}
+            step={1}
+            {...register('tankVolume')}
+            className="w-full border rounded px-3 py-2"
           />
         </div>
         <div>
           <label className="block font-medium mb-1" htmlFor="initialTemp">
             Initial Tank Temperature (°F)
           </label>
-          <Controller
-            name="initialTemp"
-            control={control}
-            render={({ field }) => (
-              <input
-                id="initialTemp"
-                type="number"
-                min={-40}
-                step={1}
-                {...field}
-                className="w-full border rounded px-3 py-2"
-              />
-            )}
+          <input
+            id="initialTemp"
+            type="number"
+            min={-40}
+            step={1}
+            {...register('initialTemp')}
+            className="w-full border rounded px-3 py-2"
           />
         </div>
         <div>
           <label className="block font-medium mb-1" htmlFor="panelArea">
             Panel Area (m²)
           </label>
-          <Controller
-            name="panelArea"
-            control={control}
-            render={({ field }) => (
-              <input
-                id="panelArea"
-                type="number"
-                min={0.1}
-                step={0.1}
-                {...field}
-                className="w-full border rounded px-3 py-2"
-              />
-            )}
+          <input
+            id="panelArea"
+            type="number"
+            min={0.1}
+            step={0.1}
+            {...register('panelArea')}
+            className="w-full border rounded px-3 py-2"
           />
         </div>
         <div>
           <label className="block font-medium mb-1" htmlFor="elevationDiff">
             Tank Elevation Difference (m)
           </label>
-          <Controller
-            name="elevationDiff"
-            control={control}
-            render={({ field }) => (
-              <input
-                type="number"
-                id="elevationDiff"
-                min={1}
-                step={1}
-                {...field}
-                className="w-full border rounded px-3 py-2"
-              />
-            )}
+          <input
+            type="number"
+            id="elevationDiff"
+            min={1}
+            step={1}
+            {...register('elevationDiff')}
+            className="w-full border rounded px-3 py-2"
           />
           <span className="text-xs text-gray-500">
             Difference between the solar panel position and the tank height
