@@ -96,7 +96,7 @@ export function useSimulation() {
         elevationDiff,
         fluid
       );
-      effectiveFlowRate = Math.max(effectiveFlowRate, flowRate);
+      effectiveFlowRate = Math.min(effectiveFlowRate, flowRate);
     } else {
       // Flow rate is exactly 0, no flow at all
       effectiveFlowRate = 0;
