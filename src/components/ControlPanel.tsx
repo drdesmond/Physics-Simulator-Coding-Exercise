@@ -1,5 +1,5 @@
 import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { SimulationParams } from '../types/index';
 import { FLUIDS } from '../models/Fluid';
 
@@ -25,7 +25,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
   defaultValues,
   data,
 }) => {
-  const { control, handleSubmit, reset, register } = useForm<SimulationParams>({
+  const { handleSubmit, reset, register } = useForm<SimulationParams>({
     defaultValues,
   });
 

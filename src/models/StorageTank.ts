@@ -1,6 +1,6 @@
 export interface StorageTankProps {
   volume: number; // liters
-  initialTemp: number; // °K
+  initialTemp: number; // °F
 }
 
 export class StorageTank {

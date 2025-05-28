@@ -11,7 +11,7 @@ import {
 } from 'recharts';
 
 export type ChartPanelProps = {
-  data: { time: number; tankTemp: number; panelTemp?: number; Q?: number; Q_loss?: number }[];
+  data: { time: number; tankTemp: number; panelTemp?: number; Q?: number; qLoss?: number }[];
 };
 
 export const ChartPanel: React.FC<ChartPanelProps> = ({ data }) => {
@@ -25,7 +25,7 @@ export const ChartPanel: React.FC<ChartPanelProps> = ({ data }) => {
             dataKey="time"
             label={{ value: 'Time (s)', position: 'insideBottomRight', offset: -5 }}
           />
-          <YAxis label={{ value: 'Temp (°K)', angle: -90, position: 'insideLeft' }} />
+          <YAxis label={{ value: 'Temp (°F)', angle: -90, position: 'insideLeft' }} />
           <Tooltip />
           <Legend />
           <Line
@@ -56,14 +56,14 @@ export const ChartPanel: React.FC<ChartPanelProps> = ({ data }) => {
               name="Heat Input (Q)"
             />
           )}
-          {data[0]?.Q_loss !== undefined && (
+          {data[0]?.qLoss !== undefined && (
             <Line
               type="monotone"
-              dataKey="Q_loss"
+              dataKey="qLoss"
               stroke="#34d399"
               strokeWidth={2}
               dot={false}
-              name="Heat Loss (Q_loss)"
+              name="Heat Loss (qLoss)"
             />
           )}
         </LineChart>

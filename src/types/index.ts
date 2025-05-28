@@ -5,7 +5,7 @@ export interface SimulationState {
   tankTemp: number;
   panelTemp: number;
   Q: number;
-  Q_loss: number;
+  qLoss: number;
   running: boolean;
 }
 

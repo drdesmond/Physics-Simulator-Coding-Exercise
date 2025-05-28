@@ -30,7 +30,7 @@ describe('Solar Thermal System Simulator App', () => {
     tankTemp: number;
     panelTemp: number;
     Q: number;
-    Q_loss: number;
+    qLoss: number;
   }[] = [];
   const mockParams: SimulationParams = {
     fluid: 'water' as FluidType,
@@ -49,7 +49,7 @@ describe('Solar Thermal System Simulator App', () => {
     tankTemp: mockParams.initialTemp,
     panelTemp: mockParams.initialTemp,
     Q: 0,
-    Q_loss: 0,
+    qLoss: 0,
     running,
   });
 
@@ -200,8 +200,8 @@ describe('Solar Thermal System Simulator App', () => {
     mockUseSimulation.mockReturnValue({
       state: runningState,
       data: [
-        { time: 0, tankTemp: 20, panelTemp: 20, Q: 0, Q_loss: 0 },
-        { time: 1, tankTemp: 21, panelTemp: 22, Q: 100, Q_loss: 10 },
+        { time: 0, tankTemp: 20, panelTemp: 20, Q: 0, qLoss: 0 },
+        { time: 1, tankTemp: 21, panelTemp: 22, Q: 100, qLoss: 10 },
       ],
       params: mockParams,
       start: mockStart,
@@ -229,8 +229,8 @@ describe('Solar Thermal System Simulator App', () => {
     mockUseSimulation.mockReturnValue({
       state: getMockState(true),
       data: [
-        { time: 0, tankTemp: 20, panelTemp: 20, Q: 0, Q_loss: 0 },
-        { time: 1, tankTemp: 20.5, panelTemp: 21, Q: 50, Q_loss: 5 },
+        { time: 0, tankTemp: 20, panelTemp: 20, Q: 0, qLoss: 0 },
+        { time: 1, tankTemp: 20.5, panelTemp: 21, Q: 50, qLoss: 5 },
       ],
       params: { ...mockParams, flowRate: 0, elevationDiff: 5 },
       start: mockStart,
@@ -256,8 +256,8 @@ describe('Solar Thermal System Simulator App', () => {
     mockUseSimulation.mockReturnValue({
       state: getMockState(true),
       data: [
-        { time: 0, tankTemp: 20, panelTemp: 20, Q: 0, Q_loss: 0 },
-        { time: 1, tankTemp: 20, panelTemp: 20, Q: 0, Q_loss: 0 },
+        { time: 0, tankTemp: 20, panelTemp: 20, Q: 0, qLoss: 0 },
+        { time: 1, tankTemp: 20, panelTemp: 20, Q: 0, qLoss: 0 },
       ],
       params: { ...mockParams, flowRate: 0, elevationDiff: -5 },
       start: mockStart,
@@ -280,8 +280,8 @@ describe('Solar Thermal System Simulator App', () => {
     mockUseSimulation.mockReturnValue({
       state: getMockState(true),
       data: [
-        { time: 0, tankTemp: 20, panelTemp: 20, Q: 0, Q_loss: 0 },
-        { time: 1, tankTemp: 21, panelTemp: 22, Q: 100, Q_loss: 10 },
+        { time: 0, tankTemp: 20, panelTemp: 20, Q: 0, qLoss: 0 },
+        { time: 1, tankTemp: 21, panelTemp: 22, Q: 100, qLoss: 10 },
       ],
       params: { ...mockParams, irradiance: 1000 },
       start: mockStart,

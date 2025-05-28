@@ -18,7 +18,7 @@ function getInitialState(params: SimulationParams): SimulationState {
     tankTemp: params.initialTemp,
     panelTemp: params.ambientTemp,
     Q: 0,
-    Q_loss: 0,
+    qLoss: 0,
     running: false,
   };
 }
@@ -46,13 +46,21 @@ export function useSimulation() {
   const paramsRef = useRef<SimulationParams | null>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const [data, setData] = useState<
-    { time: number; tankTemp: number; panelTemp: number; Q: number; Q_loss: number }[]
+    { time: number; tankTemp: number; panelTemp: number; Q: number; qLoss: number }[]
   >([]);
 
   // Keep stateRef in sync with latest state
   useEffect(() => {
     stateRef.current = state;
   }, [state]);
+
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
 
   const tick = useCallback(() => {
     if (!paramsRef.current) return;
@@ -75,7 +83,7 @@ export function useSimulation() {
     // Compute heat input and losses
     const Q = computeHeatInput(irradiance, efficiency, panelArea, prevState.panelTemp); // W
     const heatTransferCoeff = computeHeatTransferCoeff(prevState.panelTemp, ambientTemp);
-    const Q_loss = computeHeatLoss(
+    const qLoss = computeHeatLoss(
       panelArea,
       prevState.panelTemp,
       ambientTemp,
@@ -103,55 +111,70 @@ export function useSimulation() {
     }
 
     // flowRate: L/min -> m^3/s
-    const flowRate_m3s = effectiveFlowRate / 1000 / 60;
-    const massFlowRate = flowRate_m3s * fluidProps.density; // kg/s
+    const flowRateM3s = effectiveFlowRate / 1000 / 60;
+    const massFlowRate = flowRateM3s * fluidProps.density; // kg/s
 
     // Calculate heat transfer between tank and panel
-    let Q_tank_to_panel = 0;
+    let QTankToPanel = 0;
     if (massFlowRate > 0) {
       // Heat transfer from tank to panel when tank is hotter
       if (prevState.tankTemp > prevState.panelTemp) {
-        Q_tank_to_panel =
+        QTankToPanel =
           massFlowRate * fluidProps.specificHeat * (prevState.tankTemp - prevState.panelTemp);
       }
     }
 
     // Net heat to panel = solar input - ambient loss + heat from tank
-    const Q_net = Q - Q_loss + Q_tank_to_panel;
+    const qNet = Q - qLoss + QTankToPanel;
 
     // Calculate panel temperature change due to heat input/loss
-    const deltaT_panel = computeTemperatureChange(Q_net, 0, 0, true, panelArea);
-    const newPanelTemp = prevState.panelTemp + deltaT_panel;
+    const deltaTPanel = computeTemperatureChange(qNet, 0, 0, true, panelArea);
+    const newPanelTemp = prevState.panelTemp + deltaTPanel;
 
     // Calculate fluid temperature change in panel
-    let deltaT_fluid = 0;
+    let deltaTFluid = 0;
     if (massFlowRate > 0) {
       if (prevState.tankTemp > prevState.panelTemp) {
         // Tank is hotter: fluid cools down in panel
-        deltaT_fluid = -Q_tank_to_panel / (massFlowRate * fluidProps.specificHeat);
+        //  Q = m * c * ΔT
+        //  where
+        //  Q = heat transfer
+        //  m = mass flow rate
+        //  c = specific heat
+        //  ΔT = temperature change
+        //  ΔT = Q / (m * c)
+        //  ΔT = -QTankToPanel / (massFlowRate * fluidProps.specificHeat)
+
+        deltaTFluid = -QTankToPanel / (massFlowRate * fluidProps.specificHeat);
       } else {
         // Panel is hotter: fluid heats up in panel
-        deltaT_fluid = Q_net / (massFlowRate * fluidProps.specificHeat);
+        //  Q = m * c * ΔT
+        //  where
+        //  Q = heat transfer
+        //  m = mass flow rate
+        //  c = specific heat
+        //  ΔT = temperature change
+        deltaTFluid = qNet / (massFlowRate * fluidProps.specificHeat);
       }
     }
 
     // Panel outlet temp = panel temp + fluid temp change
-    const panelOutletTemp = newPanelTemp + deltaT_fluid;
+    const panelOutletTemp = newPanelTemp + deltaTFluid;
 
     // For a well-mixed tank, energy delivered per second:
-    const Q_delivered =
+    const qDelivered =
       massFlowRate * fluidProps.specificHeat * (panelOutletTemp - prevState.tankTemp);
 
     // Update tank temp
-    const deltaT_tank = computeTemperatureChange(Q_delivered, fluidMass, fluidProps.specificHeat);
-    const newTankTemp = prevState.tankTemp + deltaT_tank;
+    const deltaTTank = computeTemperatureChange(qDelivered, fluidMass, fluidProps.specificHeat);
+    const newTankTemp = prevState.tankTemp + deltaTTank;
 
     const tickData = {
       time: prevState.time + 1,
       tankTemp: newTankTemp,
       panelTemp: newPanelTemp,
       Q,
-      Q_loss,
+      qLoss,
     };
     setData((prev) => {
       const newData = [...prev, tickData];

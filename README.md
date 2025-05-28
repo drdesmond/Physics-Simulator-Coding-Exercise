@@ -89,7 +89,7 @@ The project includes unit tests for physics calculations and component rendering
   - Tank temperature over time
   - Panel temperature over time
   - Heat input (Q)
-  - Heat loss (Q_loss)
+  - Heat loss (qLoss)
 - **Buttons:** Start, Pause, and Reset for simulation control
 - **Accordion Panels:** Collapsible sections for controls and visualization
 
@@ -224,13 +224,13 @@ h = (Nu * k) / L + forced_convection
 #### **4. Heat Loss to Environment**
 
 ```
-Q_loss = h * area * (T_panel - T_ambient)
+qLoss = h * area * (T_panel - T_ambient)
 ```
 
 #### **5. Net Heat Input**
 
 ```
-Q_net = Q - Q_loss
+Q_net = Q - qLoss
 ```
 
 #### **6. Panel Temperature Change**

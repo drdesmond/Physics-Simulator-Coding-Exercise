@@ -166,19 +166,19 @@ export function computeHeatInput(
 
 export function computeHeatLoss(
   area: number,
-  T_panelF: number,
-  T_ambientF: number,
+  panelTempF: number,
+  ambientTempF: number,
   h: number,
   elevationDiff: number
 ): number {
   // Heat loss increases with elevation due to lower air pressure
   const elevationFactor = 1 - (elevationDiff / 1000) * 0.1; // 10% reduction per 1000m
-  return h * area * (T_panelF - T_ambientF) * elevationFactor; // convection loss in °F
+  return h * area * (panelTempF - ambientTempF) * elevationFactor; // convection loss in °F
 }
 
 // Compute temperature change with thermal mass consideration
 export function computeTemperatureChange(
-  Q_net: number,
+  qNet: number,
   mass: number,
   specificHeat: number,
   isPanel: boolean = false,
@@ -186,7 +186,7 @@ export function computeTemperatureChange(
 ): number {
   const effectiveMass = isPanel ? getPanelThermalMass(panelArea) : mass;
   const effectiveSpecificHeat = isPanel ? PANEL_SPECIFIC_HEAT : specificHeat;
-  return Q_net / (effectiveMass * effectiveSpecificHeat); // temperature change in °F
+  return qNet / (effectiveMass * effectiveSpecificHeat); // temperature change in °F
 }
 
 // Compute heat transfer coefficient using natural convection correlation
