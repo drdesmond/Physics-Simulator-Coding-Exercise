@@ -1,0 +1,258 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>physics-simulator</title><meta name="description" content="Documentation for physics-simulator"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><a href="index.html" class="title">physics-simulator</a><div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/><ul role="listbox" id="tsd-search-results"></ul><div id="tsd-search-status" aria-live="polite" aria-atomic="true"><div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><h1>physics-simulator</h1></div><div class="tsd-panel tsd-typography"><h1 id="physics-simulator-coding-exercise" class="tsd-anchor-link">Physics Simulator Coding Exercise<a href="#physics-simulator-coding-exercise" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1><h2 id="🖥️-deployed-to-httpsphysics-simulator-codingnetlifyapp" class="tsd-anchor-link">🖥️ Deployed to: <a href="https://physics-simulator-coding.netlify.app/">https://physics-simulator-coding.netlify.app/</a><a href="#🖥️-deployed-to-httpsphysics-simulator-codingnetlifyapp" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Test Live <a href="https://youtu.be/10L8m4ujDA0">Here</a></p>
+<h2 id="🖥️-watch-the-demo" class="tsd-anchor-link">🖥️ Watch the demo<a href="#🖥️-watch-the-demo" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Watch Demo on <a href="https://youtu.be/10L8m4ujDA0">Youtube</a>
+<a href="https://youtu.be/QDBnxJsE0b8"><img src="media/solar-thermal-system-diagram.png" alt="Watch the demo"></a></p>
+<p><em>Video: Video of the solar thermosiphon fluid heater system showing the Sun, Solar Panel, Pump, and Storage Tank in a closed-loop heat transfer system exposed to environmental conditions.</em></p>
+<p>See link to Physics Simulator Coding <a href="media/physics-simulator-coding-exercise.pdf">Exercise</a></p>
+<h2 id="🛠️-project-overview" class="tsd-anchor-link">🛠️ Project Overview<a href="#🛠️-project-overview" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>This project simulates heat transfer in a solar thermosiphon fluid heater system, modeling the flow of energy from a solar panel to a storage tank via a circulating fluid. The simulation is interactive, allowing users to adjust system parameters and visualize the results in real time.</p>
+<hr>
+<h2 id="🚀-usage-instructions" class="tsd-anchor-link">🚀 Usage Instructions<a href="#🚀-usage-instructions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ol>
+<li><strong>Install Node:</strong>
+Installed Node (tested with node V20) on your computer.</li>
+<li><strong>Install dependencies:</strong>
+From the folder root run<pre><code class="bash"><span class="hl-0">yarn</span><span class="hl-1"> </span><span class="hl-2">install</span><br/><span class="hl-3"># or</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span>
+</code><button type="button">Copy</button></pre>
+
+</li>
+<li><strong>Start the development server:</strong><pre><code class="bash"><span class="hl-0">yarn</span><br/><span class="hl-3"># or</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">start</span>
+</code><button type="button">Copy</button></pre>
+
+</li>
+<li><strong>Open in your browser:</strong>
+Visit <a href="http://localhost:3000">http://localhost:3000</a></li>
+<li><strong>Adjust parameters</strong> in the Control Panel and press <strong>Start</strong> to run the simulation. Press <strong>Pause</strong> or <strong>Reset</strong> as needed.</li>
+</ol>
+<h2 id="🧪-testing" class="tsd-anchor-link">🧪 Testing<a href="#🧪-testing" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>The project includes unit tests for physics calculations and component rendering. To run the tests:</p>
+<ol>
+<li>
+<p><strong>Run all tests:</strong></p>
+<pre><code class="bash"><span class="hl-0">yarn</span><span class="hl-1"> </span><span class="hl-2">test</span><br/><span class="hl-3"># or</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">test</span>
+</code><button type="button">Copy</button></pre>
+
+</li>
+</ol>
+<hr>
+<h2 id="🌟-features" class="tsd-anchor-link">🌟 Features<a href="#🌟-features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li><strong>Real-time simulation</strong> of solar thermal physics</li>
+<li><strong>Adjustable parameters:</strong>
+<ul>
+<li>Fluid type (Water or Glycol)</li>
+<li>Solar irradiance (W/m²)</li>
+<li>Solar panel efficiency (0-1)</li>
+<li>Ambient temperature (°F)</li>
+<li>Flow rate (L/min)</li>
+<li>Tank volume (L)</li>
+<li>Initial temperature (°F)</li>
+<li>Panel area (m²)</li>
+<li>Tank elevation difference (m) — positive means tank is above panel (enables gravity-driven return)</li>
+</ul>
+</li>
+<li><strong>Live-updating chart</strong> of tank and panel temperatures, heat input, and heat loss</li>
+<li><strong>Responsive, mobile-friendly, and beautiful UI</strong> (Tailwind CSS)</li>
+<li><strong>Start, Pause, and Reset</strong> simulation controls</li>
+<li><strong>Physics-based calculations</strong> for heat transfer and energy balance</li>
+<li><strong>Dynamic color visualization</strong> of temperature changes in panel and tank</li>
+<li><strong>Automatic panel management</strong> for optimal viewing experience</li>
+</ul>
+<hr>
+<h2 id="🖥️-uiux" class="tsd-anchor-link">🖥️ UI/UX<a href="#🖥️-uiux" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li><strong>Header:</strong> Project title and description</li>
+<li><strong>Control Panel:</strong> Inputs for all simulation parameters, with clear labels and units
+<ul>
+<li>Includes 'Tank Elevation Difference (m)' to model gravity/thermosiphon return</li>
+</ul>
+</li>
+<li><strong>Visualization Panel:</strong>
+<ul>
+<li>Interactive diagram showing system components with temperature-based color gradients</li>
+<li>Real-time temperature display for panel and tank</li>
+<li>Solar irradiance visualization</li>
+</ul>
+</li>
+<li><strong>Chart Panel:</strong> Responsive line chart (Recharts) showing:
+<ul>
+<li>Tank temperature over time</li>
+<li>Panel temperature over time</li>
+<li>Heat input (Q)</li>
+<li>Heat loss (qLoss)</li>
+</ul>
+</li>
+<li><strong>Buttons:</strong> Start, Pause, and Reset for simulation control</li>
+<li><strong>Accordion Panels:</strong> Collapsible sections for controls and visualization</li>
+</ul>
+<hr>
+<h2 id="⚙️-implementation-details" class="tsd-anchor-link">⚙️ Implementation Details<a href="#⚙️-implementation-details" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><h3 id="tech-stack" class="tsd-anchor-link"><strong>Tech Stack</strong><a href="#tech-stack" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li><strong>Framework:</strong> React 18 + TypeScript</li>
+<li><strong>Styling:</strong> Tailwind CSS</li>
+<li><strong>Charts:</strong> Recharts</li>
+<li><strong>Forms:</strong> react-hook-form</li>
+<li><strong>State Management:</strong> useReducer, useRef, useState</li>
+<li><strong>Icons:</strong> @heroicons/react</li>
+</ul>
+<h3 id="folder-structure" class="tsd-anchor-link"><strong>Folder Structure</strong><a href="#folder-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code><span class="hl-4">src</span><span class="hl-1">/</span><br/><span class="hl-1">  </span><span class="hl-4">components</span><span class="hl-1">/      # </span><span class="hl-5">UI</span><span class="hl-1"> </span><span class="hl-0">components</span><span class="hl-1"> (</span><span class="hl-4">Header</span><span class="hl-1">, </span><span class="hl-4">ControlPanel</span><span class="hl-1">, </span><span class="hl-4">ChartPanel</span><span class="hl-1">)</span><br/><span class="hl-1">  </span><span class="hl-4">hooks</span><span class="hl-1">/           # </span><span class="hl-4">useSimulation</span><span class="hl-1"> </span><span class="hl-4">custom</span><span class="hl-1"> </span><span class="hl-4">hook</span><br/><span class="hl-1">  </span><span class="hl-4">models</span><span class="hl-1">/          # </span><span class="hl-4">Physics</span><span class="hl-1"> </span><span class="hl-0">models</span><span class="hl-1"> (</span><span class="hl-4">Fluid</span><span class="hl-1">, </span><span class="hl-4">SolarPanel</span><span class="hl-1">, </span><span class="hl-4">Pump</span><span class="hl-1">, </span><span class="hl-4">StorageTank</span><span class="hl-1">, </span><span class="hl-4">Environment</span><span class="hl-1">)</span><br/><span class="hl-1">  </span><span class="hl-4">types</span><span class="hl-1">/           # </span><span class="hl-4">Shared</span><span class="hl-1"> </span><span class="hl-4">types</span><span class="hl-1">/</span><span class="hl-4">interfaces</span><br/><span class="hl-1">  </span><span class="hl-4">utils</span><span class="hl-1">/           # </span><span class="hl-4">Physics</span><span class="hl-1"> </span><span class="hl-4">formulas</span>
+</code><button>Copy</button></pre>
+
+<h3 id="simulation-flow" class="tsd-anchor-link"><strong>Simulation Flow</strong><a href="#simulation-flow" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li>The simulation models a thermosiphon fluid heater system, the top pipe is pump-driven and the bottom pipe as a passive return:</li>
+<li>If the pump is ON (flow rate &gt; 0), flow is as set by the user.</li>
+<li>If the pump is OFF (flow rate = 0), the simulation checks for passive return:
+<ul>
+<li>If the tank is above the panel (positive elevation difference), gravity-driven flow is enabled.</li>
+<li>If the panel is hotter than the tank, thermosiphon flow is enabled.</li>
+<li>Otherwise, flow is zero and heat transfer stops.</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><strong>Initialize Parameters:</strong> Fluid, irradiance, efficiency, ambient temp, flow rate, tank volume, initial temp, panel area, <strong>tank elevation difference</strong></li>
+<li><strong>Start Simulation Loop:</strong> 1-second ticks, updating system state</li>
+<li><strong>On Each Tick:</strong>
+<ul>
+<li>Compute heat input from the sun</li>
+<li>Compute heat loss to the environment using dynamic heat transfer coefficient</li>
+<li>Calculate mass flow rate from flow rate and fluid density</li>
+<li>Calculate panel outlet temperature</li>
+<li>Calculate energy delivered to the tank</li>
+<li>Update tank and panel temperatures</li>
+<li>Store results for charting</li>
+</ul>
+</li>
+<li><strong>Display Results:</strong>
+<ul>
+<li>Live chart updates</li>
+<li>Dynamic color gradients in panel and tank visualization</li>
+<li>Real-time temperature displays</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="🌡️-physics--formulas" class="tsd-anchor-link">🌡️ Physics &amp; Formulas<a href="#🌡️-physics--formulas" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><h3 id="key-variables" class="tsd-anchor-link"><strong>Key Variables</strong><a href="#key-variables" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><ul>
+<li><strong>Irradiance (W/m²):</strong> Solar power per unit area</li>
+<li><strong>Efficiency (0-1):</strong> Base efficiency of the solar panel at reference temperature</li>
+<li><strong>Panel Area (m²):</strong> Surface area of the solar collector</li>
+<li><strong>Ambient Temp (°F):</strong> Outside temperature in Fahrenheit (also the initial temperature of the panel)</li>
+<li><strong>Flow Rate (L/min):</strong> Pump flow rate of the fluid</li>
+<li><strong>Tank Volume (L):</strong> Storage capacity</li>
+<li><strong>Initial Temp (°F):</strong> Starting temperature in Fahrenheit</li>
+<li><strong>Fluid Properties:</strong> Specific heat (J/kg·°F), density (kg/m³)</li>
+</ul>
+<h3 id="temperature-dependent-properties" class="tsd-anchor-link"><strong>Temperature-Dependent Properties</strong><a href="#temperature-dependent-properties" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><h4 id="1-air-properties" class="tsd-anchor-link"><strong>1. Air Properties</strong><a href="#1-air-properties" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><p>All air properties are calculated based on the film temperature (average of panel and ambient temperatures):</p>
+<pre><code class="typescript"><span class="hl-3">// Air density (kg/m³) using ideal gas law</span><br/><span class="hl-4">ρ</span><span class="hl-1"> = </span><span class="hl-5">P</span><span class="hl-1">/(</span><span class="hl-5">R</span><span class="hl-1">*</span><span class="hl-5">T</span><span class="hl-1">)  </span><span class="hl-3">// P = 101325 Pa, R = 53.35 ft·lbf/(lb·°R)</span><br/><br/><span class="hl-3">// Air viscosity (kg/(m·s)) using Sutherland&#39;s formula</span><br/><span class="hl-4">μ</span><span class="hl-1"> = </span><span class="hl-4">μ</span><span class="hl-1">₀ * (</span><span class="hl-5">T</span><span class="hl-1">₀ + </span><span class="hl-5">S</span><span class="hl-1">)/(</span><span class="hl-5">T</span><span class="hl-1"> + </span><span class="hl-5">S</span><span class="hl-1">) * (</span><span class="hl-5">T</span><span class="hl-1">/</span><span class="hl-5">T</span><span class="hl-1">₀)^</span><span class="hl-6">1.5</span><br/><span class="hl-3">// where S = 198.72°R, T₀ = 491.67°R, μ₀ = 1.716e-5 kg/(m·s)</span><br/><br/><span class="hl-3">// Air thermal conductivity (W/(m·°F))</span><br/><span class="hl-4">k</span><span class="hl-1"> = </span><span class="hl-4">k</span><span class="hl-1">₀ + </span><span class="hl-4">slope</span><span class="hl-1"> * </span><span class="hl-5">T</span><br/><span class="hl-3">// where k₀ = 0.0242 W/(m·°F), slope = 7.7e-5 W/(m·°F²)</span><br/><br/><span class="hl-3">// Prandtl number</span><br/><span class="hl-4">Pr</span><span class="hl-1"> = </span><span class="hl-6">0.713</span><span class="hl-1"> - </span><span class="hl-6">0.0001</span><span class="hl-1"> * </span><span class="hl-5">T</span>
+</code><button type="button">Copy</button></pre>
+
+<h4 id="2-solar-panel-properties" class="tsd-anchor-link"><strong>2. Solar Panel Properties</strong><a href="#2-solar-panel-properties" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Panel efficiency decreases with temperature and thermal mass scales with area:</p>
+<pre><code class="typescript"><span class="hl-3">// Panel efficiency</span><br/><span class="hl-4">η</span><span class="hl-1"> = </span><span class="hl-4">η</span><span class="hl-1">₀ * (</span><span class="hl-6">1</span><span class="hl-1"> + </span><span class="hl-4">β</span><span class="hl-1"> * (</span><span class="hl-5">T</span><span class="hl-1"> - </span><span class="hl-4">T_ref</span><span class="hl-1">))</span><br/><span class="hl-3">// where β = -0.00222 °F⁻¹ (temperature coefficient)</span><br/><span class="hl-3">// T_ref = 77°F (reference temperature)</span><br/><br/><span class="hl-3">// Panel thermal mass</span><br/><span class="hl-4">panelMass</span><span class="hl-1"> = </span><span class="hl-5">PANEL_MASS_PER_M2</span><span class="hl-1"> * </span><span class="hl-4">area</span><br/><span class="hl-3">// where PANEL_MASS_PER_M2 = 10 kg/m²</span><br/><span class="hl-3">// specific heat = 900 J/(kg·°F) for aluminum/glass construction</span>
+</code><button type="button">Copy</button></pre>
+
+<h3 id="formulas-used" class="tsd-anchor-link"><strong>Formulas Used</strong><a href="#formulas-used" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><h4 id="1-mass-flow-rate" class="tsd-anchor-link"><strong>1. Mass Flow Rate</strong><a href="#1-mass-flow-rate" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code><span class="hl-4">flowRate_m3s</span><span class="hl-1"> = </span><span class="hl-4">flowRate</span><span class="hl-1"> / </span><span class="hl-6">1000</span><span class="hl-1"> / </span><span class="hl-6">60</span><br/><span class="hl-4">massFlowRate</span><span class="hl-1"> = </span><span class="hl-4">flowRate_m3s</span><span class="hl-1"> * </span><span class="hl-4">density</span>
+</code><button>Copy</button></pre>
+
+<h4 id="2-heat-input-from-sun" class="tsd-anchor-link"><strong>2. Heat Input from Sun</strong><a href="#2-heat-input-from-sun" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code><span class="hl-5">Q</span><span class="hl-1"> = </span><span class="hl-4">irradiance</span><span class="hl-1"> * </span><span class="hl-4">η</span><span class="hl-1"> * </span><span class="hl-4">area</span><br/><span class="hl-3">// where η is temperature-dependent efficiency</span>
+</code><button>Copy</button></pre>
+
+<h4 id="3-heat-transfer-coefficient-h" class="tsd-anchor-link"><strong>3. Heat Transfer Coefficient (h)</strong><a href="#3-heat-transfer-coefficient-h" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code><span class="hl-3">// Using Churchill-Chu correlation for natural convection</span><br/><span class="hl-4">Gr</span><span class="hl-1"> = (</span><span class="hl-4">g</span><span class="hl-1"> * </span><span class="hl-4">β</span><span class="hl-1"> * </span><span class="hl-5">ΔT</span><span class="hl-1"> * </span><span class="hl-5">L</span><span class="hl-1">³) / </span><span class="hl-4">ν</span><span class="hl-1">²</span><br/><span class="hl-4">Ra</span><span class="hl-1"> = </span><span class="hl-4">Gr</span><span class="hl-1"> * </span><span class="hl-4">Pr</span><br/><span class="hl-4">Nu</span><span class="hl-1"> = </span><span class="hl-6">0.68</span><span class="hl-1"> + (</span><span class="hl-6">0.67</span><span class="hl-1"> * </span><span class="hl-4">Ra</span><span class="hl-1">^</span><span class="hl-6">0.25</span><span class="hl-1">) / (</span><span class="hl-6">1</span><span class="hl-1"> + (</span><span class="hl-6">0.492</span><span class="hl-1">/</span><span class="hl-4">Pr</span><span class="hl-1">)^(</span><span class="hl-6">9</span><span class="hl-1">/</span><span class="hl-6">16</span><span class="hl-1">))^(</span><span class="hl-6">4</span><span class="hl-1">/</span><span class="hl-6">9</span><span class="hl-1">)</span><br/><span class="hl-4">h</span><span class="hl-1"> = (</span><span class="hl-4">Nu</span><span class="hl-1"> * </span><span class="hl-4">k</span><span class="hl-1">) / </span><span class="hl-5">L</span><span class="hl-1"> + </span><span class="hl-4">forced_convection</span><br/><span class="hl-3">// where forced_convection = 5.7 + 3.8 * windSpeed</span>
+</code><button>Copy</button></pre>
+
+<h4 id="4-heat-loss-to-environment" class="tsd-anchor-link"><strong>4. Heat Loss to Environment</strong><a href="#4-heat-loss-to-environment" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code><span class="hl-4">qLoss</span><span class="hl-1"> = </span><span class="hl-4">h</span><span class="hl-1"> * </span><span class="hl-4">area</span><span class="hl-1"> * (</span><span class="hl-4">T_panel</span><span class="hl-1"> - </span><span class="hl-4">T_ambient</span><span class="hl-1">)</span>
+</code><button>Copy</button></pre>
+
+<h4 id="5-net-heat-input" class="tsd-anchor-link"><strong>5. Net Heat Input</strong><a href="#5-net-heat-input" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code><span class="hl-4">Q_net</span><span class="hl-1"> = </span><span class="hl-5">Q</span><span class="hl-1"> - </span><span class="hl-4">qLoss</span>
+</code><button>Copy</button></pre>
+
+<h4 id="6-panel-temperature-change" class="tsd-anchor-link"><strong>6. Panel Temperature Change</strong><a href="#6-panel-temperature-change" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code><span class="hl-3">// Panel temperature change considers thermal mass</span><br/><span class="hl-4">ΔT_panel</span><span class="hl-1"> = </span><span class="hl-4">Q_net</span><span class="hl-1"> / (</span><span class="hl-4">panelMass</span><span class="hl-1"> * </span><span class="hl-4">panelSpecificHeat</span><span class="hl-1">)</span><br/><span class="hl-4">newPanelTemp</span><span class="hl-1"> = </span><span class="hl-4">panelTemp</span><span class="hl-1"> + </span><span class="hl-4">ΔT_panel</span>
+</code><button>Copy</button></pre>
+
+<h4 id="7-fluid-temperature-change-in-panel" class="tsd-anchor-link"><strong>7. Fluid Temperature Change in Panel</strong><a href="#7-fluid-temperature-change-in-panel" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code><span class="hl-4">ΔT_fluid</span><span class="hl-1"> = </span><span class="hl-4">Q_net</span><span class="hl-1"> / (</span><span class="hl-4">massFlowRate</span><span class="hl-1"> * </span><span class="hl-4">fluidSpecificHeat</span><span class="hl-1">)</span><br/><span class="hl-4">panelOutletTemp</span><span class="hl-1"> = </span><span class="hl-4">newPanelTemp</span><span class="hl-1"> + </span><span class="hl-4">ΔT_fluid</span>
+</code><button>Copy</button></pre>
+
+<h4 id="8-energy-delivered-to-tank" class="tsd-anchor-link"><strong>8. Energy Delivered to Tank</strong><a href="#8-energy-delivered-to-tank" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code><span class="hl-4">Q_delivered</span><span class="hl-1"> = </span><span class="hl-4">massFlowRate</span><span class="hl-1"> * </span><span class="hl-4">specificHeat</span><span class="hl-1"> * (</span><span class="hl-4">panelOutletTemp</span><span class="hl-1"> - </span><span class="hl-4">tankTemp</span><span class="hl-1">)</span>
+</code><button>Copy</button></pre>
+
+<h4 id="9-tank-temperature-update" class="tsd-anchor-link"><strong>9. Tank Temperature Update</strong><a href="#9-tank-temperature-update" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code><span class="hl-4">ΔT_tank</span><span class="hl-1"> = </span><span class="hl-4">Q_delivered</span><span class="hl-1"> / (</span><span class="hl-4">fluidMass</span><span class="hl-1"> * </span><span class="hl-4">specificHeat</span><span class="hl-1">)</span><br/><span class="hl-4">newTankTemp</span><span class="hl-1"> = </span><span class="hl-4">tankTemp</span><span class="hl-1"> + </span><span class="hl-4">ΔT_tank</span>
+</code><button>Copy</button></pre>
+
+<hr>
+<h2 id="🧪-physics-assumptions" class="tsd-anchor-link">🧪 Physics Assumptions<a href="#🧪-physics-assumptions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li>The tank is well-mixed (no stratification)</li>
+<li>All net heat from the panel is transferred to the fluid</li>
+<li>The pump provides constant flow (no head loss modeled)</li>
+<li>Air properties are calculated at the film temperature</li>
+<li>Solar panel efficiency decreases with temperature</li>
+<li>Panel thermal mass scales with area (10 kg/m²)</li>
+<li>Natural convection is modeled using Churchill-Chu correlation</li>
+<li>A small forced convection component simulates light wind</li>
+</ul>
+<hr>
+<h2 id="⏱️-simulation-duration--stopping" class="tsd-anchor-link">⏱️ Simulation Duration &amp; Stopping<a href="#⏱️-simulation-duration--stopping" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li>The simulation will run indefinitely, updating the chart in real time, until you press <strong>Pause</strong> or <strong>Reset</strong>.</li>
+<li>There is currently no automatic stopping condition (such as a maximum time or temperature).</li>
+<li>For long simulations, consider pausing or resetting to conserve browser resources.</li>
+</ul>
+<hr>
+<h2 id="📝-notes--tips" class="tsd-anchor-link">📝 Notes &amp; Tips<a href="#📝-notes--tips" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li><strong>Changing parameters:</strong> You must press <strong>Start</strong> after changing parameters for the new values to take effect.</li>
+<li><strong>Flow rate:</strong> Affects how quickly the tank heats up and the temperature difference between the panel and tank.
+<ul>
+<li>If set to zero, passive return is possible only if the tank is above the panel or the panel is hotter than the tank.</li>
+</ul>
+</li>
+<li><strong>Try extreme values:</strong> Set flow rate very low or high to see different system behaviors.</li>
+<li><strong>Chart:</strong> Tank temperature, panel temperature, heat input, and heat loss are all plotted for insight.</li>
+<li><strong>Visualization:</strong> The color gradient in the panel and tank changes from blue (cold) to red (hot) as temperature increases.</li>
+<li><strong>Panel Management:</strong> The control panel automatically closes when simulation starts, and the visualization panel opens automatically.</li>
+</ul>
+<hr>
+<h3 id="fluid-properties" class="tsd-anchor-link"><strong>Fluid Properties</strong><a href="#fluid-properties" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><p>The simulation supports multiple heat transfer fluids with the following properties:</p>
+<h4 id="currently-used-properties" class="tsd-anchor-link"><strong>Currently Used Properties</strong><a href="#currently-used-properties" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li><strong>Specific Heat (J/(kg·K))</strong>: Used to calculate temperature changes in the fluid</li>
+<li><strong>Density (kg/m³)</strong>: Used to calculate buoyancy forces and flow rates</li>
+<li><strong>Viscosity (kg/(m·s))</strong>: Used to calculate flow resistance and critical startup temperature</li>
+</ul>
+<h4 id="properties-not-currently-modeled" class="tsd-anchor-link"><strong>Properties Not Currently Modeled</strong><a href="#properties-not-currently-modeled" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
+<li><strong>Thermal Conductivity (W/(m·K))</strong>: Not currently used in heat transfer calculations</li>
+<li><strong>Freezing Point (°F)</strong>: Not currently checked in the simulation</li>
+<li><strong>Boiling Point (°F)</strong>: Not currently checked in the simulation</li>
+</ul>
+<h3 id="available-fluids" class="tsd-anchor-link"><strong>Available Fluids</strong><a href="#available-fluids" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><ol>
+<li>
+<p><strong>Water</strong></p>
+<ul>
+<li>Lowest viscosity</li>
+<li>Highest specific heat</li>
+<li>Best for moderate temperature ranges</li>
+</ul>
+</li>
+<li>
+<p><strong>Ethylene Glycol</strong></p>
+<ul>
+<li>Higher viscosity than water</li>
+<li>Lower freezing point</li>
+<li>Good for cold climates</li>
+</ul>
+</li>
+<li>
+<p><strong>Mineral Oil</strong></p>
+<ul>
+<li>Highest viscosity</li>
+<li>Highest boiling point</li>
+<li>Good for high-temperature systems</li>
+</ul>
+</li>
+<li>
+<p><strong>Silicone Oil</strong></p>
+<ul>
+<li>Very high viscosity</li>
+<li>Wide temperature range</li>
+<li>Good for extreme conditions</li>
+</ul>
+</li>
+<li>
+<p><strong>Propylene Glycol</strong></p>
+<ul>
+<li>Medium viscosity</li>
+<li>Low freezing point</li>
+<li>Food-safe alternative to ethylene glycol</li>
+</ul>
+</li>
+</ol>
+<h2 id="📄-license" class="tsd-anchor-link">📄 License<a href="#📄-license" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>None</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg><h3>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg><h3>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#physics-simulator-coding-exercise"><span>Physics <wbr/>Simulator <wbr/>Coding <wbr/>Exercise</span></a><ul><li><a href="#🖥️-deployed-to-httpsphysics-simulator-codingnetlifyapp"><span>🖥️ <wbr/>Deployed to: https://physics-<wbr/>simulator-<wbr/>coding.netlify.app/</span></a></li><li><a href="#🖥️-watch-the-demo"><span>🖥️ <wbr/>Watch the demo</span></a></li><li><a href="#🛠️-project-overview"><span>🛠️ <wbr/>Project <wbr/>Overview</span></a></li><li><a href="#🚀-usage-instructions"><span>🚀 <wbr/>Usage <wbr/>Instructions</span></a></li><li><a href="#🧪-testing"><span>🧪 <wbr/>Testing</span></a></li><li><a href="#🌟-features"><span>🌟 <wbr/>Features</span></a></li><li><a href="#🖥️-uiux"><span>🖥️ <wbr/>UI/<wbr/>UX</span></a></li><li><a href="#⚙️-implementation-details"><span>⚙️ <wbr/>Implementation <wbr/>Details</span></a></li><li><ul><li><a href="#tech-stack"><span>Tech <wbr/>Stack</span></a></li><li><a href="#folder-structure"><span>Folder <wbr/>Structure</span></a></li><li><a href="#simulation-flow"><span>Simulation <wbr/>Flow</span></a></li></ul></li><li><a href="#🌡️-physics--formulas"><span>🌡️ <wbr/>Physics &amp; <wbr/>Formulas</span></a></li><li><ul><li><a href="#key-variables"><span>Key <wbr/>Variables</span></a></li><li><a href="#temperature-dependent-properties"><span>Temperature-<wbr/>Dependent <wbr/>Properties</span></a></li><li><ul><li><a href="#1-air-properties"><span>1. <wbr/>Air <wbr/>Properties</span></a></li><li><a href="#2-solar-panel-properties"><span>2. <wbr/>Solar <wbr/>Panel <wbr/>Properties</span></a></li></ul></li><li><a href="#formulas-used"><span>Formulas <wbr/>Used</span></a></li><li><ul><li><a href="#1-mass-flow-rate"><span>1. <wbr/>Mass <wbr/>Flow <wbr/>Rate</span></a></li><li><a href="#2-heat-input-from-sun"><span>2. <wbr/>Heat <wbr/>Input from <wbr/>Sun</span></a></li><li><a href="#3-heat-transfer-coefficient-h"><span>3. <wbr/>Heat <wbr/>Transfer <wbr/>Coefficient (h)</span></a></li><li><a href="#4-heat-loss-to-environment"><span>4. <wbr/>Heat <wbr/>Loss to <wbr/>Environment</span></a></li><li><a href="#5-net-heat-input"><span>5. <wbr/>Net <wbr/>Heat <wbr/>Input</span></a></li><li><a href="#6-panel-temperature-change"><span>6. <wbr/>Panel <wbr/>Temperature <wbr/>Change</span></a></li><li><a href="#7-fluid-temperature-change-in-panel"><span>7. <wbr/>Fluid <wbr/>Temperature <wbr/>Change in <wbr/>Panel</span></a></li><li><a href="#8-energy-delivered-to-tank"><span>8. <wbr/>Energy <wbr/>Delivered to <wbr/>Tank</span></a></li><li><a href="#9-tank-temperature-update"><span>9. <wbr/>Tank <wbr/>Temperature <wbr/>Update</span></a></li></ul></li></ul></li><li><a href="#🧪-physics-assumptions"><span>🧪 <wbr/>Physics <wbr/>Assumptions</span></a></li><li><a href="#⏱️-simulation-duration--stopping"><span>⏱️ <wbr/>Simulation <wbr/>Duration &amp; <wbr/>Stopping</span></a></li><li><a href="#📝-notes--tips"><span>📝 <wbr/>Notes &amp; <wbr/>Tips</span></a></li><li><ul><li><a href="#fluid-properties"><span>Fluid <wbr/>Properties</span></a></li><li><ul><li><a href="#currently-used-properties"><span>Currently <wbr/>Used <wbr/>Properties</span></a></li><li><a href="#properties-not-currently-modeled"><span>Properties <wbr/>Not <wbr/>Currently <wbr/>Modeled</span></a></li></ul></li><li><a href="#available-fluids"><span>Available <wbr/>Fluids</span></a></li></ul></li><li><a href="#📄-license"><span>📄 <wbr/>License</span></a></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="modules.html">physics-simulator</a><ul class="tsd-small-nested-navigation" id="tsd-nav-container"><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>

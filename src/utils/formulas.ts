@@ -79,7 +79,7 @@ export function computeThermosiphonFlow(
   tankTempF: number,
   elevationDiff: number,
   fluidType: FluidType,
-  pipeDiameter: number = 0.02 // 20mm default pipe diameter
+  pipeDiameter: number = 0.02, // 20mm default pipe diameter
 ): number {
   // No flow if panel is colder than tank
   if (panelTempF <= tankTempF) return 0;
@@ -128,7 +128,7 @@ export function computeThermosiphonFlow(
 
     // Calculate new velocity
     velocity = Math.sqrt(
-      (2 * g * drivingHead) / (1 + (frictionFactor * pipeLength) / pipeDiameter)
+      (2 * g * drivingHead) / (1 + (frictionFactor * pipeLength) / pipeDiameter),
     );
 
     // Check for convergence
@@ -149,7 +149,7 @@ export function computeHeatInput(
   irradiance: number,
   baseEfficiency: number,
   area: number,
-  panelTempF: number
+  panelTempF: number,
 ): number {
   // Reference temperature for efficiency (typically 77°F)
   const refTempF = 77;
@@ -169,7 +169,7 @@ export function computeHeatLoss(
   panelTempF: number,
   ambientTempF: number,
   h: number,
-  elevationDiff: number
+  elevationDiff: number,
 ): number {
   // Heat loss increases with elevation due to lower air pressure
   const elevationFactor = 1 - (elevationDiff / 1000) * 0.1; // 10% reduction per 1000m
@@ -177,12 +177,23 @@ export function computeHeatLoss(
 }
 
 // Compute temperature change with thermal mass consideration
+/**
+ *
+ *
+ * @export
+ * @param {number} qNet
+ * @param {number} mass
+ * @param {number} specificHeat
+ * @param {boolean} [isPanel=false]
+ * @param {number} [panelArea=0]
+ * @return {*}  {number}
+ */
 export function computeTemperatureChange(
   qNet: number,
   mass: number,
   specificHeat: number,
   isPanel: boolean = false,
-  panelArea: number = 0
+  panelArea: number = 0,
 ): number {
   const effectiveMass = isPanel ? getPanelThermalMass(panelArea) : mass;
   const effectiveSpecificHeat = isPanel ? PANEL_SPECIFIC_HEAT : specificHeat;
@@ -191,13 +202,25 @@ export function computeTemperatureChange(
 
 // Compute heat transfer coefficient using natural convection correlation
 // Based on Churchill-Chu correlation for vertical plates
+/**
+ *
+ *
+ * @export
+ * @param {number} panelTempF
+ * @param {number} ambientTempF
+ * @param {number} [panelHeight=1.5]
+ * @param {number} [irradiance=0]
+ * @param {number} [flowRate=0]
+ * @param {number} [elevationDiff=0]
+ * @return {*}  {number}
+ */
 export function computeHeatTransferCoeff(
   panelTempF: number,
   ambientTempF: number,
   panelHeight: number = 1.5, // default panel height in meters
   irradiance: number = 0,
   flowRate: number = 0,
-  elevationDiff: number = 0
+  elevationDiff: number = 0,
 ): number {
   const deltaT = Math.abs(panelTempF - ambientTempF);
   if (deltaT < 0.1) return 5; // minimum value for very small temperature differences
